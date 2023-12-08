@@ -23,6 +23,7 @@ public class TodoController {
     public ResVo postTodo(@RequestBody TodoInsDto dto){
         return service.postTodo(dto);
     }
+
     @Operation(summary = "청소 할 일 목록 불러오기", description = "8개씩 페이징 처리")
     @GetMapping
     public List<TodoSelAllVo> getTodoAll(TodoSelAllDto dto) {

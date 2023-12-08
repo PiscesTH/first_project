@@ -7,15 +7,16 @@
         INSERT INTO todo
         SET user_id = #{userId},
             cleaning = #{cleaning},
-            d_day = #{dDay},
+            do_day = #{doDay},
             is_checked = #{isChecked},
             is_del = #{isDel}
     </insert>
     
     <select id="selTodoAll">
-        SELECT todo_id AS todoId, cleaning, d_day AS dDay
+        SELECT todo_id AS todoId, cleaning, do_day AS dDay
         FROM todo
         WHERE user_id = #{loginedUserId}
-        LIMIT #{startdIdx}, #{rowCount}
+        AND is_checked != 1
+        LIMIT #{startIdx}, #{rowCount}
     </select>
 </mapper>
