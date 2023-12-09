@@ -17,4 +17,6 @@ public class TodoSelAllVo {
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Schema(description = "청소 할 날짜")
     private LocalDate doDay;
+    @Schema(description = "체크 여부")
+    private int isChecked;
 }

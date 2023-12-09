@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 public class TodoInsDto {
     @Schema(description = "로그인 한 유저의 userId")
-    private int userId;
+    private int loginedUserId;
     @Schema(description = "청소 목표")
     private String cleaning;
     @Schema(description = "청소 할 날짜")

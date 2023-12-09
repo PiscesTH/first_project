@@ -5,7 +5,7 @@
 <mapper namespace="com.clean.cleanssakssak.todo.TodoMapper">
     <insert id="insTodo" useGeneratedKeys="true" keyProperty="todoId">
         INSERT INTO todo
-        SET user_id = #{userId},
+        SET user_id = #{loginedUserId},
             cleaning = #{cleaning},
             do_day = #{doDay},
             is_checked = #{isChecked},
@@ -13,16 +13,18 @@
     </insert>
     
     <select id="selTodoAll">
-        SELECT todo_id AS todoId, cleaning, do_day AS dDay
+        SELECT todo_id AS todoId, cleaning,
+            do_day AS doDay, is_checked AS isChecked
         FROM todo
         WHERE user_id = #{loginedUserId}
-        AND is_checked != 1
+        AND is_del != 1
+        ORDER BY do_day
         LIMIT #{startIdx}, #{rowCount}
     </select>
 
     <update id="updTodo">
         UPDATE todo
-        SET cleaning = #{cleaing},
+        SET cleaning = #{cleaning},
             do_day = #{doDay}
         WHERE (todo_id, user_id) = (#{todoId}, #{loginedUserId})
     </update>

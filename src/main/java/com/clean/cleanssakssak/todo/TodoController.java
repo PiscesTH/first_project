@@ -1,9 +1,7 @@
 package com.clean.cleanssakssak.todo;
 
 import com.clean.cleanssakssak.common.ResVo;
-import com.clean.cleanssakssak.todo.model.TodoInsDto;
-import com.clean.cleanssakssak.todo.model.TodoSelAllDto;
-import com.clean.cleanssakssak.todo.model.TodoSelAllVo;
+import com.clean.cleanssakssak.todo.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +18,7 @@ public class TodoController {
 
     @Operation(summary = "청소 할 일 등록", description = "등록 성공 : todo_id 값 리턴 / 등록 실패 : 0 ")
     @PostMapping
-    public ResVo postTodo(@RequestBody TodoInsDto dto){
+    public ResVo postTodo(@RequestBody TodoInsDto dto) {
         return service.postTodo(dto);
     }
 
@@ -28,5 +26,23 @@ public class TodoController {
     @GetMapping
     public List<TodoSelAllVo> getTodoAll(TodoSelAllDto dto) {
         return service.getTodoAll(dto);
+    }
+
+    @Operation(summary = "청소 할 일 수정", description = "수정 성공 : 1 / 실패 : 0")
+    @PatchMapping
+    public ResVo patchTodo(TodoUpdDto dto) {
+        return service.patchTodo(dto);
+    }
+
+    @Operation(summary = "청소 할 일 삭제 처리", description = "삭제 성공 : 1 / 복구 : 0")
+    @DeleteMapping
+    public ResVo delTodo(TodoToggleDto dto) {
+        return service.delTodo(dto);
+    }
+
+    @Operation(summary = "할 일 체크 처리", description = "체크 처리 : 1 / 해제 : 0")
+    @PostMapping("/check")
+    public ResVo toggleCheck(TodoToggleDto dto) {
+        return service.toggleCheck(dto);
     }
 }
