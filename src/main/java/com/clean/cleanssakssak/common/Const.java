@@ -9,4 +9,8 @@ public class Const {
 
     public static final int TOGGLE_OFF = 0;
     public static final int TOGGLE_ON = 1;
+
+    public static final int UID_DUPLICATED = -1;
+    public static final int NICK_NAME_DUPLICATED = -2;
+
 }
