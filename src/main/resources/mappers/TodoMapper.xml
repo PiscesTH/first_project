@@ -19,4 +19,23 @@
         AND is_checked != 1
         LIMIT #{startIdx}, #{rowCount}
     </select>
+
+    <update id="updTodo">
+        UPDATE todo
+        SET cleaning = #{cleaing},
+            do_day = #{doDay}
+        WHERE (todo_id, user_id) = (#{todoId}, #{loginedUserId})
+    </update>
+
+    <update id="delTodo">
+        UPDATE todo
+        SET is_del = (1 - is_del)
+        WHERE (todo_id, user_id) = (#{todoId}, #{loginedUserId})
+    </update>
+
+    <update id="toggleCheck">
+        UPDATE todo
+        SET is_checked = (1 - is_checked)
+        WHERE (todo_id, user_id) = (#{todoId}, #{loginedUserId})
+    </update>
 </mapper>

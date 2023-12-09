@@ -15,5 +15,6 @@ public class TodoSelAllVo {
     @Schema(description = "청소 할 일")
     private String cleaning;
     @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @Schema(description = "청소 할 날짜")
     private LocalDate doDay;
 }
