@@ -21,4 +21,16 @@
         FROM user
         WHERE nick_name = #{nickName}
     </select>
+
+    <select id="selUserLoginInfo">
+        SELECT user_id AS userId, upw, nick_name AS nickName
+        FROM user
+        WHERE uid = #{uid}
+    </select>
+
+    <update id="updUserInfo">
+        UPDATE user
+        SET upw = #{upw}
+        WHERE
+    </update>
 </mapper>
