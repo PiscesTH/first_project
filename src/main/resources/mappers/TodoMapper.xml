@@ -7,9 +7,7 @@
         INSERT INTO todo
         SET user_id = #{loginedUserId},
             cleaning = #{cleaning},
-            do_day = #{doDay},
-            is_checked = #{isChecked},
-            is_del = #{isDel}
+            do_day = #{doDay}
     </insert>
     
     <select id="selTodoAll">

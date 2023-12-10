@@ -23,7 +23,7 @@ public class UserController {
             result = -2 : 닉네임 중복
             """)
     @PostMapping("/api/signup")
-    public ResVo postSignup(UserInsDto dto) {
+    public ResVo postSignup(@RequestBody UserInsDto dto) {
         return service.postSignup(dto);
     }
 
@@ -33,7 +33,7 @@ public class UserController {
             result = 3 : 아이디 없음
             """)
     @PostMapping("/api/signin")
-    public UserLoginVo postSignin(UserLoginDto dto) {
+    public UserLoginVo postSignin(@RequestBody UserLoginDto dto) {
         return service.postSignin(dto);
     }
 
@@ -42,7 +42,7 @@ public class UserController {
             result > 0 : 변경 성공
             """)
     @PatchMapping("/profile")
-    public ResVo patchProfile(UserUbdDto dto){
+    public ResVo patchProfile(@RequestBody UserUbdDto dto){
         return service.patchProfile(dto);
     }
 

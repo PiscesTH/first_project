@@ -30,7 +30,7 @@ public class TodoController {
 
     @Operation(summary = "청소 할 일 수정", description = "수정 성공 : 1 / 실패 : 0")
     @PatchMapping
-    public ResVo patchTodo(TodoUpdDto dto) {
+    public ResVo patchTodo(@RequestBody TodoUpdDto dto) {
         return service.patchTodo(dto);
     }
 
