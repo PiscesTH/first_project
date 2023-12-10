@@ -3,10 +3,14 @@ package com.clean.cleanssakssak.diary;
 import com.clean.cleanssakssak.common.ResVo;
 import com.clean.cleanssakssak.diary.model.DiaryDelDto;
 import com.clean.cleanssakssak.diary.model.DiaryInsDto;
+import com.clean.cleanssakssak.diary.model.DiarySelAllDto;
+import com.clean.cleanssakssak.diary.model.DiarySelAllVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -33,4 +37,9 @@ public class DiaryController {
         return service.delDiary(dto);
     }
 
+    @Operation(summary = "다이어리 전제 조회", description = "10개씩 페이징 처리")
+    @GetMapping
+    public List<DiarySelAllVo> getDiaryAll(DiarySelAllDto dto){
+        return service.getDiaryAll(dto);
+    }
 }

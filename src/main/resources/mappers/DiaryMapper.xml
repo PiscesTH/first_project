@@ -19,7 +19,27 @@
         </foreach>
     </insert>
 
-    <update id="">
-
+    <update id="updDiary">
+        UPDATE user
+        SET title = #{title},
+            contents = #{contents}
+        WHERE user_id = #{loginedUserId} AND diary_id = #{diaryId}
     </update>
+
+    <select id="selDiaryAll">
+        SELECT diary_id AS diaryId, title, contents, created_at AS createdAt
+        FROM user
+        WHERE user_id = #{loginedUserId}
+        ORDER BY diary_id DESC
+        LIMIT #{startIdx}, #{rowCount}
+    </select>
+
+    <select id="selPicAll">
+        SELECT diary_id AS diaryId, pic
+        FROM diary_pic
+        WHERE diary_id IN
+        <foreach collection="diaryIdList" item="diaryId" open="(" close=")" separator=",">
+            #{diaryId}
+        </foreach>
+    </select>
 </mapper>
