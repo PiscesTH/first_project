@@ -33,4 +33,9 @@
         SET nick_name = #{nickName}
         WHERE user_id = #{loginedUserId}
     </update>
+
+    <delete id="delUser">
+        DELETE FROM user
+        WHERE user_id = #{loginedUserId}
+    </delete>
 </mapper>

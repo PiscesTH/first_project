@@ -49,7 +49,20 @@ public class UserService {
     }
 
     public ResVo patchProfile(UserUbdDto dto){
-        return null;
+        int updResult = 0;
+        if (dto.getUpw() != null && !dto.getUpw().isBlank()){
+            String hashedUpw = BCrypt.hashpw(dto.getUpw(),BCrypt.gensalt());
+            dto.setUpw(hashedUpw);
+            updResult += mapper.updUserUpw(dto);
+        }
+        if (dto.getNickName() != null && !dto.getNickName().isBlank()){
+            updResult += mapper.updUserNickName(dto);
+        }
+        return new ResVo(updResult);
     }
 
+    public ResVo delProfile(int loginedUserId){
+        int delResult = mapper.delUser(loginedUserId);
+        return new ResVo(delResult);
+    }
 }
