@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
     int insUser(UserInsDto dto);
-    Integer selUserByUid(UserInsDto dto);
     Integer selUserByNickName(UserInsDto dto);
-    UserLoginProcDto selUserLoginInfo(UserLoginDto dto);
+    UserLoginProcDto selUserLoginInfo(String uid);
 }

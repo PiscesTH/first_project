@@ -15,11 +15,11 @@ public class UserService {
     private final UserMapper mapper;
 
     public ResVo postSignup(UserInsDto dto) {
-        Integer checkDuplication = mapper.selUserByUid(dto);
-        if (checkDuplication != null) {
+        UserLoginProcDto checkUid = mapper.selUserLoginInfo(dto.getUid());
+        if (checkUid != null) {
             return new ResVo(Const.UID_DUPLICATED);
         }
-        checkDuplication = mapper.selUserByNickName(dto);
+        Integer checkDuplication = mapper.selUserByNickName(dto);
         if (checkDuplication != null) {
             return new ResVo(Const.NICK_NAME_DUPLICATED);
         }
@@ -30,7 +30,7 @@ public class UserService {
     }
 
     public UserLoginVo postSignin(UserLoginDto dto) {
-        UserLoginProcDto pDto = mapper.selUserLoginInfo(dto);
+        UserLoginProcDto pDto = mapper.selUserLoginInfo(dto.getUid());
         UserLoginVo resultVo = UserLoginVo.builder()
                 .result(Const.UPW_INCORRECT)
                 .build();

@@ -10,12 +10,6 @@
             nick_name = #{nickName}
     </insert>
 
-    <select id="selUserByUid">
-        SELECT user_id
-        FROM user
-        WHERE uid = #{uid}
-    </select>
-
     <select id="selUserByNickName">
         SELECT user_id
         FROM user
@@ -28,9 +22,15 @@
         WHERE uid = #{uid}
     </select>
 
-    <update id="updUserInfo">
+    <update id="updUserUpw">
         UPDATE user
         SET upw = #{upw}
-        WHERE
+        WHERE user_id = #{loginedUserId}
+    </update>
+
+    <update id="updUserNickName">
+        UPDATE user
+        SET nick_name = #{nickName}
+        WHERE user_id = #{loginedUserId}
     </update>
 </mapper>
