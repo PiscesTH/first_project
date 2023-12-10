@@ -28,7 +28,7 @@
 
     <select id="selDiaryAll">
         SELECT diary_id AS diaryId, title, contents, created_at AS createdAt
-        FROM user
+        FROM diary
         WHERE user_id = #{loginedUserId}
         ORDER BY diary_id DESC
         LIMIT #{startIdx}, #{rowCount}
@@ -37,8 +37,8 @@
     <select id="selPicAll">
         SELECT diary_id AS diaryId, pic
         FROM diary_pic
-        WHERE diary_id IN
-        <foreach collection="diaryIdList" item="diaryId" open="(" close=")" separator=",">
+        WHERE diary_id
+        <foreach collection="diaryIdList" item="diaryId" open="IN (" close=")" separator=",">
             #{diaryId}
         </foreach>
     </select>

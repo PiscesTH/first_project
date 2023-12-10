@@ -32,14 +32,15 @@ public class DiaryService {
 
     public List<DiarySelAllVo> getDiaryAll(DiarySelAllDto dto) {
         dto.setRowCount(Const.DIARY_ROW_COUNT);
-        dto.setRowCount((dto.getPage() - 1) * Const.DIARY_ROW_COUNT);
+        dto.setStartIdx((dto.getPage() - 1) * Const.DIARY_ROW_COUNT);
         List<DiarySelAllVo> resultVo = mapper.selDiaryAll(dto);
-        if (resultVo == null) {
+        if (resultVo == null || resultVo.isEmpty()) {
             return null;
         }
         Map<Integer, DiarySelAllVo> map = new HashMap<>();
         List<Integer> diaryIdList = new ArrayList<>();
         for (DiarySelAllVo vo : resultVo) {
+            vo.setPics(new ArrayList<>());
             diaryIdList.add(vo.getDiaryId());
             map.put(vo.getDiaryId(), vo);
         }

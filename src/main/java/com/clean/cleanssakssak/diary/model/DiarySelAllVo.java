@@ -12,6 +12,6 @@ public class DiarySelAllVo {
     private int diaryId;
     private String title;
     private String contents;
-    private List<String> pics = new ArrayList<>();
+    private List<String> pics;
     private String CreatedAt;
 }
