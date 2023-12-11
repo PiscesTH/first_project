@@ -10,5 +10,5 @@ public class UserUbdDto {
     @Schema(description = "변경할 비밀번호")
     private String upw;
     @Schema(description = "변경할 닉네임")
-    private String nickName;
+    private String nickname;
 }

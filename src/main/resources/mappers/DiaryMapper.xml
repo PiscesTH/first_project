@@ -4,14 +4,14 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clean.cleanssakssak.diary.DiaryMapper">
     <insert id="insDiary" useGeneratedKeys="true" keyProperty="diaryId">
-        INSERT INTO diary
+        INSERT INTO t_diary
         SET user_id = #{loginedUserId},
             title = #{title},
             contents = #{contents}
     </insert>
 
     <insert id="insDiaryPics">
-        INSERT INTO diary_pic
+        INSERT INTO t_diary_pic
         (diary_id, pic)
         VALUES
         <foreach collection="pics" item="pic" separator=",">
@@ -20,15 +20,17 @@
     </insert>
 
     <update id="updDiary">
-        UPDATE user
+        UPDATE t_user
         SET title = #{title},
             contents = #{contents}
         WHERE user_id = #{loginedUserId} AND diary_id = #{diaryId}
     </update>
 
     <select id="selDiaryAll">
-        SELECT diary_id AS diaryId, title, contents, created_at AS createdAt
-        FROM diary
+        SELECT A.diary_id AS diaryId, B.nickname, A.title, A.contents, A.created_at AS createdAt
+        FROM t_diary A
+        JOIN t_user B
+        USING (user_id)
         WHERE user_id = #{loginedUserId}
         ORDER BY diary_id DESC
         LIMIT #{startIdx}, #{rowCount}
@@ -36,10 +38,31 @@
 
     <select id="selPicAll">
         SELECT diary_id AS diaryId, pic
-        FROM diary_pic
+        FROM t_diary_pic
         WHERE diary_id
         <foreach collection="diaryIdList" item="diaryId" open="IN (" close=")" separator=",">
             #{diaryId}
         </foreach>
     </select>
+
+    <delete id="delDiary">
+        DELETE FROM t_diary
+        WHERE diary_id = #{diaryId}
+        AND user_id = #{loginedUserId}
+    </delete>
+
+    <delete id="delDiaryPics">
+        DELETE B
+        FROM t_diary A
+        LEFT JOIN t_diary_pic B
+        USING (diary_id)
+        WHERE diary_id = #{diaryId} AND A.user_id = #{loginedUserId}
+    </delete>
+
+    <update id="updDiary">
+        UPDATE t_diary
+        SET title = #{title},
+            contents = #{contents}
+        WHERE diary_id = #{diaryId} AND A.user_id = #{loginedUserId}
+    </update>
 </mapper>

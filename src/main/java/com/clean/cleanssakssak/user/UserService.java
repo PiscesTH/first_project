@@ -19,9 +19,9 @@ public class UserService {
         if (checkUid != null) {
             return new ResVo(Const.UID_DUPLICATED);
         }
-        Integer checkDuplication = mapper.selUserByNickName(dto);
+        Integer checkDuplication = mapper.selUserByNickname(dto);
         if (checkDuplication != null) {
-            return new ResVo(Const.NICK_NAME_DUPLICATED);
+            return new ResVo(Const.NICKNAME_DUPLICATED);
         }
         String hashedUpw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());
         dto.setUpw(hashedUpw);
@@ -41,7 +41,7 @@ public class UserService {
         if (BCrypt.checkpw(dto.getUpw(), pDto.getUpw())) {
             return UserLoginVo.builder()
                     .userId(pDto.getUserId())
-                    .nickName(pDto.getNickName())
+                    .nickname(pDto.getNickname())
                     .result(Const.LOGIN_SUCCESS)
                     .build();
         }
@@ -55,8 +55,8 @@ public class UserService {
             dto.setUpw(hashedUpw);
             updResult += mapper.updUserUpw(dto);
         }
-        if (dto.getNickName() != null && !dto.getNickName().isBlank()){
-            updResult += mapper.updUserNickName(dto);
+        if (dto.getNickname() != null && !dto.getNickname().isBlank()){
+            updResult += mapper.updUserNickname(dto);
         }
         return new ResVo(updResult);
     }

@@ -1,9 +1,6 @@
 package com.clean.cleanssakssak.diary;
 
-import com.clean.cleanssakssak.diary.model.DiaryInsDto;
-import com.clean.cleanssakssak.diary.model.DiarySelAllDto;
-import com.clean.cleanssakssak.diary.model.DiarySelAllVo;
-import com.clean.cleanssakssak.diary.model.DiarySelPicsVo;
+import com.clean.cleanssakssak.diary.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,4 +11,8 @@ public interface DiaryMapper {
     int insDiaryPics(DiaryInsDto dto);
     List<DiarySelAllVo> selDiaryAll(DiarySelAllDto dto);
     List<DiarySelPicsVo> selPicAll(List<Integer> diaryIdList);
+    int delDiary(DiaryDelDto dto);
+    int delDiaryPics(DiaryDelDto dto);
+    int updDiary(DiaryUpdDto dto);
+
 }

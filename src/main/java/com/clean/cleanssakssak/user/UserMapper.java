@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
     int insUser(UserInsDto dto);
-    Integer selUserByNickName(UserInsDto dto);
+    Integer selUserByNickname(UserInsDto dto);
     UserLoginProcDto selUserLoginInfo(String uid);
     int updUserUpw(UserUbdDto dto);
-    int updUserNickName(UserUbdDto dto);
+    int updUserNickname(UserUbdDto dto);
     int delUser(int loginedUserId);
 }

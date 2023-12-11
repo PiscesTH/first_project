@@ -4,38 +4,38 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clean.cleanssakssak.user.UserMapper">
     <insert id="insUser" useGeneratedKeys="true" keyProperty="userId">
-        INSERT INTO user
+        INSERT INTO t_user
         SET uid = #{uid},
             upw = #{upw},
-            nick_name = #{nickName}
+            nickname = #{nickname}
     </insert>
 
-    <select id="selUserByNickName">
+    <select id="selUserByNickname">
         SELECT user_id
-        FROM user
-        WHERE nick_name = #{nickName}
+        FROM t_user
+        WHERE nickname = #{nickname}
     </select>
 
     <select id="selUserLoginInfo">
-        SELECT user_id AS userId, upw, nick_name AS nickName
-        FROM user
+        SELECT user_id AS userId, upw, nickname
+        FROM t_user
         WHERE uid = #{uid}
     </select>
 
     <update id="updUserUpw">
-        UPDATE user
+        UPDATE t_user
         SET upw = #{upw}
         WHERE user_id = #{loginedUserId}
     </update>
 
-    <update id="updUserNickName">
-        UPDATE user
-        SET nick_name = #{nickName}
+    <update id="updUserNickname">
+        UPDATE t_user
+        SET nickname = #{nickname}
         WHERE user_id = #{loginedUserId}
     </update>
 
     <delete id="delUser">
-        DELETE FROM user
+        DELETE FROM t_user
         WHERE user_id = #{loginedUserId}
     </delete>
 </mapper>

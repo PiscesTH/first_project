@@ -1,10 +1,7 @@
 package com.clean.cleanssakssak.diary;
 
 import com.clean.cleanssakssak.common.ResVo;
-import com.clean.cleanssakssak.diary.model.DiaryDelDto;
-import com.clean.cleanssakssak.diary.model.DiaryInsDto;
-import com.clean.cleanssakssak.diary.model.DiarySelAllDto;
-import com.clean.cleanssakssak.diary.model.DiarySelAllVo;
+import com.clean.cleanssakssak.diary.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +20,7 @@ public class DiaryController {
             result > 0 : 다이어리 작성 성공. pk값 리턴<br>
             result = 0 : 다이어리 작성 실패
             """)
-    @PatchMapping
+    @PostMapping
     public ResVo postDiary(@RequestBody DiaryInsDto dto){
         return service.postDiary(dto);
     }
@@ -41,5 +38,11 @@ public class DiaryController {
     @GetMapping
     public List<DiarySelAllVo> getDiaryAll(DiarySelAllDto dto){
         return service.getDiaryAll(dto);
+    }
+
+    @Operation(summary = "다이어리 수정")
+    @PutMapping
+    public ResVo putDiary(@RequestBody DiaryUpdDto dto){
+        return service.putDiary(dto);
     }
 }

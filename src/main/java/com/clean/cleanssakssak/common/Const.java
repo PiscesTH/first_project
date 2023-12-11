@@ -11,7 +11,7 @@ public class Const {
     public static final int TOGGLE_ON = 1;
 
     public static final int UID_DUPLICATED = -1;
-    public static final int NICK_NAME_DUPLICATED = -2;
+    public static final int NICKNAME_DUPLICATED = -2;
 
     public static final int LOGIN_SUCCESS = 1;
     public static final int UPW_INCORRECT = 2;

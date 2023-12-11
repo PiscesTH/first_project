@@ -6,5 +6,5 @@ import lombok.Data;
 public class UserLoginProcDto {
     private int userId;
     private String upw;
-    private String nickName;
+    private String nickname;
 }

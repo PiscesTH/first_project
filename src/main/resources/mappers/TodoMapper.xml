@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clean.cleanssakssak.todo.TodoMapper">
     <insert id="insTodo" useGeneratedKeys="true" keyProperty="todoId">
-        INSERT INTO todo
+        INSERT INTO t_todo
         SET user_id = #{loginedUserId},
             cleaning = #{cleaning},
             do_day = #{doDay}
@@ -13,7 +13,7 @@
     <select id="selTodoAll">
         SELECT todo_id AS todoId, cleaning,
             do_day AS doDay, is_checked AS isChecked
-        FROM todo
+        FROM t_todo
         WHERE user_id = #{loginedUserId}
         AND is_del != 1
         ORDER BY do_day
@@ -21,20 +21,20 @@
     </select>
 
     <update id="updTodo">
-        UPDATE todo
+        UPDATE t_todo
         SET cleaning = #{cleaning},
             do_day = #{doDay}
         WHERE (todo_id, user_id) = (#{todoId}, #{loginedUserId})
     </update>
 
     <update id="delTodo">
-        UPDATE todo
+        UPDATE t_todo
         SET is_del = (1 - is_del)
         WHERE (todo_id, user_id) = (#{todoId}, #{loginedUserId})
     </update>
 
     <update id="toggleCheck">
-        UPDATE todo
+        UPDATE t_todo
         SET is_checked = (1 - is_checked)
         WHERE (todo_id, user_id) = (#{todoId}, #{loginedUserId})
     </update>

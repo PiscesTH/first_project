@@ -1,9 +1,11 @@
 package com.clean.cleanssakssak.diary.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class DiaryDelDto {
     @Schema(description = "로그인 한 유저 pk")
     private int loginedUserId;

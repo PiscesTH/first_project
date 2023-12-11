@@ -27,7 +27,9 @@ public class DiaryService {
     }
 
     public ResVo delDiary(DiaryDelDto dto) {
-        return null;
+        int delPicsResult = mapper.delDiaryPics(dto);
+        int delDiaryResult = mapper.delDiary(dto);
+        return new ResVo(delDiaryResult);
     }
 
     public List<DiarySelAllVo> getDiaryAll(DiarySelAllDto dto) {
@@ -45,12 +47,21 @@ public class DiaryService {
             map.put(vo.getDiaryId(), vo);
         }
         List<DiarySelPicsVo> picsVoList = mapper.selPicAll(diaryIdList);
-        if (picsVoList == null){
+        if (picsVoList == null) {
             return resultVo;
         }
         for (DiarySelPicsVo picsVo : picsVoList) {
             map.get(picsVo.getDiaryId()).getPics().add(picsVo.getPic());
         }
         return resultVo;
+    }
+
+    public ResVo putDiary(DiaryUpdDto dto) {
+        int delPicResult = mapper.delDiaryPics(DiaryDelDto.builder()
+                .diaryId(dto.getDiaryId())
+                .loginedUserId(dto.getLoginedUserId())
+                .build());
+        int updDiaryResult = mapper.updDiary(dto);
+        return new ResVo(updDiaryResult);
     }
 }

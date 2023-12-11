@@ -13,5 +13,5 @@ public class UserInsDto {
     @Schema(description = "유저 비밀번호")
     private String upw;
     @Schema(description = "유저 닉네임")
-    private String nickName;
+    private String nickname;
 }
