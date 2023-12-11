@@ -13,4 +13,5 @@ public interface DiaryMapper {
     List<DiarySelPicsVo> selPicAll(List<Integer> diaryIdList);
     int delDiary(DiaryDelDto dto);
     int delDiaryPics(DiaryDelDto dto);
+    int updDiary(DiaryUpdDto dto);
 }

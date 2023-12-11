@@ -31,7 +31,6 @@ public class DiaryController {
             """)
     @DeleteMapping
     public ResVo delDiary(DiaryDelDto dto){
-        log.info("dto : {}", dto);
         return service.delDiary(dto);
     }
 
@@ -41,4 +40,10 @@ public class DiaryController {
         return service.getDiaryAll(dto);
     }
 
+    @Operation(summary = "다이어리 수정")
+    @PutMapping
+    public ResVo putDiary(@RequestBody DiaryUpdDto dto) {
+        log.info("dto : {}", dto);
+        return service.updDiary(dto);
+    }
 }

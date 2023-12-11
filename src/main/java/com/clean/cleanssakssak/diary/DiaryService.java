@@ -51,9 +51,25 @@ public class DiaryService {
         return resultVo;
     }
 
-    public ResVo delDiary(DiaryDelDto dto){
+    public ResVo delDiary(DiaryDelDto dto) {
         int delPicsResult = mapper.delDiaryPics(dto);
         int delDiaryResult = mapper.delDiary(dto);
         return new ResVo(delDiaryResult);
+    }
+
+    public ResVo updDiary(DiaryUpdDto dto) {
+        int updDiaryResult = mapper.updDiary(dto);
+        if (updDiaryResult == 0) {
+            return new ResVo(Const.FAIL);
+        }
+        int delPicsResult = mapper.delDiaryPics(DiaryDelDto.builder()
+                .diaryId(dto.getDiaryId())
+                .loginedUserId(dto.getLoginedUserId())
+                .build());
+        int insPicsResult = mapper.insDiaryPics(DiaryInsDto.builder()
+                .pics(dto.getPics())
+                .diaryId(dto.getDiaryId())
+                .build());
+        return new ResVo(Const.SUCCESS);
     }
 }

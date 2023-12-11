@@ -2,11 +2,13 @@ package com.clean.cleanssakssak.diary.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@Builder
 public class DiaryInsDto {
     @JsonIgnore
     @Schema(title = "생성된 다이어리 pk")
@@ -19,4 +21,5 @@ public class DiaryInsDto {
     private String contents;
     @Schema(title = "다이어리 사진들")
     private List<String> pics;
+
 }

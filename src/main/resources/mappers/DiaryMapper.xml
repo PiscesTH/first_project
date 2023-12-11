@@ -19,13 +19,6 @@
         </foreach>
     </insert>
 
-    <update id="updDiary">
-        UPDATE t_user
-        SET title = #{title},
-            contents = #{contents}
-        WHERE user_id = #{loginedUserId} AND diary_id = #{diaryId}
-    </update>
-
     <select id="selDiaryAll">
         SELECT A.diary_id AS diaryId, B.nickname, A.title, A.contents, A.created_at AS createdAt
         FROM t_diary A
@@ -57,4 +50,11 @@
         ON A.diary_id = B.diary_id
         WHERE A.diary_id = #{diaryId} AND A.user_id = #{loginedUserId}
     </delete>
+
+    <update id="updDiary">
+        UPDATE t_diary
+        SET title = #{title},
+            contents = #{contents}
+        WHERE diary_id = #{diaryId} AND user_id = #{loginedUserId}
+    </update>
 </mapper>
