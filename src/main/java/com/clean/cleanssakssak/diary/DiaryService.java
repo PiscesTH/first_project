@@ -18,6 +18,7 @@ import java.util.Map;
 public class DiaryService {
     private final DiaryMapper mapper;
 
+    //다이어리 &사진 등록
     public ResVo postDiary(DiaryInsDto dto) {
         int insDiaryResult = mapper.insDiary(dto);
         List<String> picsList = new ArrayList<>();
@@ -33,7 +34,7 @@ public class DiaryService {
         return new ResVo(dto.getDiaryId());
     }
 
-
+    //등록된 다이어리 &사진 리스트 전체 조회(페이징 처리 10개씩)
     public List<DiarySelAllVo> getDiaryAll(DiarySelAllDto dto) {
         dto.setRowCount(Const.DIARY_ROW_COUNT);
         dto.setStartIdx((dto.getPage() - 1) * Const.DIARY_ROW_COUNT);
@@ -58,12 +59,14 @@ public class DiaryService {
         return resultVo;
     }
 
+    //등록된 다이어리 삭제
     public ResVo delDiary(DiaryDelDto dto) {
         int delPicsResult = mapper.delDiaryPics(dto);
         int delDiaryResult = mapper.delDiary(dto);
         return new ResVo(delDiaryResult);
     }
 
+    //등록된 다이어리 &사진 수정
     public ResVo updDiary(DiaryUpdDto dto) {
         int updDiaryResult = mapper.updDiary(dto);
         if (updDiaryResult == 0) {

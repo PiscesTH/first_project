@@ -28,16 +28,19 @@ public class TodoService {
         return mapper.selTodoAll(dto);
     }
 
+    //작성된 todo 수정
     public ResVo patchTodo(TodoUpdDto dto){
         int updResult = mapper.updTodo(dto);
         return new ResVo(updResult);
     }
 
+    //작성된 todo 삭제
     public ResVo delTodo(TodoToggleDto dto){
         int delResult = mapper.delTodo(dto);
         return new ResVo(delResult);
     }
 
+    //체크 등록, 해제 처리
     public ResVo toggleCheck(TodoToggleDto dto) {
         int toggleResult = mapper.toggleCheck(dto);
         return new ResVo(toggleResult);

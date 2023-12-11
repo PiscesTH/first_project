@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserMapper mapper;
-
+    
+    //유저 회원가입 처리
     public ResVo postSignup(UserInsDto dto) {
         UserLoginProcDto checkUid = mapper.selUserLoginInfo(dto.getUid());
         if (checkUid != null) {
@@ -28,7 +29,8 @@ public class UserService {
         int insResult = mapper.insUser(dto);
         return new ResVo(dto.getUserId());
     }
-
+    
+    //유저 로그인 처리
     public UserLoginVo postSignin(UserLoginDto dto) {
         UserLoginProcDto pDto = mapper.selUserLoginInfo(dto.getUid());
         UserLoginVo resultVo = UserLoginVo.builder()
@@ -47,7 +49,8 @@ public class UserService {
         }
         return resultVo;
     }
-
+    
+    //유저 회원정보(비밀번호, 닉네임) 변경 처리
     public ResVo patchProfile(UserUbdDto dto){
         int updResult = 0;
         if (dto.getUpw() != null && !dto.getUpw().isBlank()){
@@ -60,7 +63,8 @@ public class UserService {
         }
         return new ResVo(updResult);
     }
-
+    
+    //유저 회원탈퇴 처리
     public ResVo delProfile(int loginedUserId){
         int delResult = mapper.delUser(loginedUserId);
         return new ResVo(delResult);

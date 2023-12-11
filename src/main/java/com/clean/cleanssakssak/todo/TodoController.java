@@ -40,7 +40,7 @@ public class TodoController {
         return service.delTodo(dto);
     }
 
-    @Operation(summary = "할 일 체크 처리", description = "체크 처리 : 1 / 해제 : 0")
+    @Operation(summary = "할 일 체크 처리", description = "체크 변경됨 : 1 / 변경 안됨 : 0")
     @PostMapping("/check")
     public ResVo toggleCheck(TodoToggleDto dto) {
         return service.toggleCheck(dto);
