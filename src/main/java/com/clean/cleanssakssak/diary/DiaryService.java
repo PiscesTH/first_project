@@ -20,6 +20,13 @@ public class DiaryService {
 
     public ResVo postDiary(DiaryInsDto dto) {
         int insDiaryResult = mapper.insDiary(dto);
+        List<String> picsList = new ArrayList<>();
+        for (String pic : dto.getPics()) {
+            if (!pic.isBlank()) {
+                picsList.add(pic);
+            }
+        }
+        dto.setPics(picsList);
         if (dto.getPics() != null && !dto.getPics().isEmpty()) {
             int insPicsResult = mapper.insDiaryPics(dto);
         }
@@ -66,9 +73,19 @@ public class DiaryService {
                 .diaryId(dto.getDiaryId())
                 .loginedUserId(dto.getLoginedUserId())
                 .build());
+        List<String> picsList = new ArrayList<>();
+        for (String pic : dto.getPics()) {
+            if (!pic.isBlank()) {
+                picsList.add(pic);
+            }
+        }
+        dto.setPics(picsList);
+        if (dto.getPics() == null || dto.getPics().isEmpty()) {
+            return new ResVo(Const.SUCCESS);
+        }
         int insPicsResult = mapper.insDiaryPics(DiaryInsDto.builder()
-                .pics(dto.getPics())
                 .diaryId(dto.getDiaryId())
+                .pics(dto.getPics())
                 .build());
         return new ResVo(Const.SUCCESS);
     }

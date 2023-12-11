@@ -43,7 +43,6 @@ public class DiaryController {
     @Operation(summary = "다이어리 수정")
     @PutMapping
     public ResVo putDiary(@RequestBody DiaryUpdDto dto) {
-        log.info("dto : {}", dto);
         return service.updDiary(dto);
     }
 }

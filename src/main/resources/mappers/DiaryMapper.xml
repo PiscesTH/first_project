@@ -15,7 +15,9 @@
         (diary_id, pic)
         VALUES
         <foreach collection="pics" item="pic" separator=",">
-            (#{diaryId}, #{pic})
+            <if test="pic != ''">
+                (#{diaryId}, #{pic})
+            </if>
         </foreach>
     </insert>
 
