@@ -47,8 +47,7 @@
 
     <delete id="delDiary">
         DELETE FROM t_diary
-        WHERE diary_id = #{diaryId}
-        AND user_id = #{loginedUserId}
+        FROM diary_id = #{diaryId} AND user_id = #{loginedUserId}
     </delete>
 
     <delete id="delDiaryPics">
@@ -56,13 +55,6 @@
         FROM t_diary A
         LEFT JOIN t_diary_pic B
         USING (diary_id)
-        WHERE diary_id = #{diaryId} AND A.user_id = #{loginedUserId}
+        WHERE diary_id = #{diaryId} AND user_id = #{loginedUserId}
     </delete>
-
-    <update id="updDiary">
-        UPDATE t_diary
-        SET title = #{title},
-            contents = #{contents}
-        WHERE diary_id = #{diaryId} AND A.user_id = #{loginedUserId}
-    </update>
 </mapper>

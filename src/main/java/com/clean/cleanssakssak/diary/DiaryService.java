@@ -26,11 +26,6 @@ public class DiaryService {
         return new ResVo(dto.getDiaryId());
     }
 
-    public ResVo delDiary(DiaryDelDto dto) {
-        int delPicsResult = mapper.delDiaryPics(dto);
-        int delDiaryResult = mapper.delDiary(dto);
-        return new ResVo(delDiaryResult);
-    }
 
     public List<DiarySelAllVo> getDiaryAll(DiarySelAllDto dto) {
         dto.setRowCount(Const.DIARY_ROW_COUNT);
@@ -56,12 +51,4 @@ public class DiaryService {
         return resultVo;
     }
 
-    public ResVo putDiary(DiaryUpdDto dto) {
-        int delPicResult = mapper.delDiaryPics(DiaryDelDto.builder()
-                .diaryId(dto.getDiaryId())
-                .loginedUserId(dto.getLoginedUserId())
-                .build());
-        int updDiaryResult = mapper.updDiary(dto);
-        return new ResVo(updDiaryResult);
-    }
 }
