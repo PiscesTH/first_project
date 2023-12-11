@@ -47,14 +47,14 @@
 
     <delete id="delDiary">
         DELETE FROM t_diary
-        FROM diary_id = #{diaryId} AND user_id = #{loginedUserId}
+        WHERE diary_id = #{diaryId} AND user_id = #{loginedUserId}
     </delete>
 
     <delete id="delDiaryPics">
         DELETE B
         FROM t_diary A
         LEFT JOIN t_diary_pic B
-        USING (diary_id)
-        WHERE diary_id = #{diaryId} AND user_id = #{loginedUserId}
+        ON A.diary_id = B.diary_id
+        WHERE A.diary_id = #{diaryId} AND A.user_id = #{loginedUserId}
     </delete>
 </mapper>

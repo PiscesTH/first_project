@@ -31,7 +31,8 @@ public class DiaryController {
             """)
     @DeleteMapping
     public ResVo delDiary(DiaryDelDto dto){
-        return null;
+        log.info("dto : {}", dto);
+        return service.delDiary(dto);
     }
 
     @Operation(summary = "다이어리 전제 조회", description = "10개씩 페이징 처리")

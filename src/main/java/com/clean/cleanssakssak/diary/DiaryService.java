@@ -51,4 +51,9 @@ public class DiaryService {
         return resultVo;
     }
 
+    public ResVo delDiary(DiaryDelDto dto){
+        int delPicsResult = mapper.delDiaryPics(dto);
+        int delDiaryResult = mapper.delDiary(dto);
+        return new ResVo(delDiaryResult);
+    }
 }
