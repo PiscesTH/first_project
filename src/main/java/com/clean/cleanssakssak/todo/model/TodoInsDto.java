@@ -16,8 +16,7 @@ public class TodoInsDto {
     @Schema(description = "청소 목표")
     private String cleaning;
     @Schema(description = "청소 할 날짜")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate doDay;
+    private String doDay;
     @JsonIgnore
     private int todoId;
 }

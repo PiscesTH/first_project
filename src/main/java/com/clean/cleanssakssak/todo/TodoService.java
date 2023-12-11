@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -17,6 +20,12 @@ public class TodoService {
 
     //청소 todo 하나 등록
     public ResVo postTodo(TodoInsDto dto){
+        String[] tmp = dto.getDoDay().split("/");
+        List<String> list = new ArrayList<>(Arrays.asList(tmp));
+        list.add(0, list.get(list.size() - 1));
+        list.remove(list.size() - 1);
+        String date = String.join("-", list);
+        dto.setDoDay(date);
         int insResult = mapper.insTodo(dto);
         return new ResVo(dto.getTodoId());
     }
