@@ -20,8 +20,8 @@ public class UserService {
         if (checkUid != null) {
             return new ResVo(Const.UID_DUPLICATED);
         }
-        Integer checkDuplication = mapper.selUserByNickname(dto.getNickname());
-        if (checkDuplication != null) {
+        Integer checkNickname = mapper.selUserByNickname(dto.getNickname());
+        if (checkNickname != null) {
             return new ResVo(Const.NICKNAME_DUPLICATED);
         }
         String hashedUpw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());
