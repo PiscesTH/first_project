@@ -20,7 +20,7 @@ public class UserService {
         if (checkUid != null) {
             return new ResVo(Const.UID_DUPLICATED);
         }
-        Integer checkDuplication = mapper.selUserByNickname(dto);
+        Integer checkDuplication = mapper.selUserByNickname(dto.getNickname());
         if (checkDuplication != null) {
             return new ResVo(Const.NICKNAME_DUPLICATED);
         }
@@ -58,7 +58,8 @@ public class UserService {
             dto.setUpw(hashedUpw);
             updResult += mapper.updUserUpw(dto);
         }
-        if (dto.getNickname() != null && !dto.getNickname().isBlank()){
+        Integer nicknameCheck = mapper.selUserByNickname(dto.getNickname());
+        if (nicknameCheck == null && dto.getNickname() != null && !dto.getNickname().isBlank()){
             updResult += mapper.updUserNickname(dto);
         }
         return new ResVo(updResult);
