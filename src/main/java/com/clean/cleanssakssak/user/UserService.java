@@ -16,6 +16,9 @@ public class UserService {
     
     //유저 회원가입 처리
     public ResVo postSignup(UserInsDto dto) {
+        if (dto.getUpw() == null || dto.getUpw().isBlank()){
+            return new ResVo(Const.FAIL);
+        }
         UserLoginProcDto checkUid = mapper.selUserLoginInfo(dto.getUid());
         if (checkUid != null) {
             return new ResVo(Const.UID_DUPLICATED);
