@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Schema(title = "청소 할 일 전체 조회에 필요한 데이터",
+        description = "8개씩 페이징 처리")
 public class TodoSelAllDto {
     @Schema(description = "로그인 한 유저 userId")
     private int loginedUserId;

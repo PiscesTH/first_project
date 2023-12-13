@@ -56,12 +56,13 @@ public class UserService {
         if (dto.getUpw() != null && !dto.getUpw().isBlank()){
             String hashedUpw = BCrypt.hashpw(dto.getUpw(),BCrypt.gensalt());
             dto.setUpw(hashedUpw);
-            updResult += mapper.updUserUpw(dto);
+            //updResult += mapper.updUserUpw(dto);
         }
         Integer nicknameCheck = mapper.selUserByNickname(dto.getNickname());
-        if (nicknameCheck == null && dto.getNickname() != null && !dto.getNickname().isBlank()){
+        /*if (nicknameCheck == null && dto.getNickname() != null && !dto.getNickname().isBlank()){
             updResult += mapper.updUserNickname(dto);
-        }
+        }*/
+        updResult = mapper.updUserUpw(dto);
         return new ResVo(updResult);
     }
     
