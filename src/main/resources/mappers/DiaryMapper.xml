@@ -39,7 +39,8 @@
     </select>
 
     <delete id="delDiary">
-        DELETE FROM t_diary
+        UPDATE t_diary
+        SET is_del = 1
         WHERE diary_id = #{diaryId} AND user_id = #{loginedUserId}
     </delete>
 
