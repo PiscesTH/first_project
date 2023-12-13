@@ -17,4 +17,5 @@ public class Const {
     public static final int UPW_INCORRECT = 2;
     public static final int UID_NOT_EXIST = 3;
 
+    public static final int TITLE_NOT_EXIST = -1;
 }

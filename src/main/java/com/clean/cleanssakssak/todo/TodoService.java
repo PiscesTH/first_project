@@ -20,20 +20,20 @@ public class TodoService {
 
     //청소 todo 하나 등록
     public ResVo postTodo(TodoInsDto dto){
-        if (dto.getCleaning() == null || dto.getCleaning().isBlank()){
+        if (dto.getCleaning() == null || dto.getCleaning().isBlank()){  //cleaning 데이터가 null 이거나 공백만 있는 경우 체크
             return new ResVo(Const.FAIL);
         }
-        if (dto.getDoDay() == null || dto.getDoDay().isBlank()){
+        if (dto.getDoDay() == null || dto.getDoDay().isBlank()){    //do_day 데이터가 null 이거나 공백만 있는 경우 체크
             return new ResVo(Const.FAIL);
         }
-        String[] tmp = dto.getDoDay().split("/");
+        String[] tmp = dto.getDoDay().split("/");   //입력받은 날짜 데이터 원하는 형식으로 변경
         List<String> list = new ArrayList<>(Arrays.asList(tmp));
         list.add(0, list.get(list.size() - 1));
         list.remove(list.size() - 1);
         String date = String.join("-", list);
         dto.setDoDay(date);
         int insResult = mapper.insTodo(dto);
-        return new ResVo(dto.getTodoId());
+        return new ResVo(dto.getTodoId());   //원하는 데이터 형식으로 변경한 날짜 세팅
     }
 
     //등록한 todo 전체 조회(한 페이지에 8개씩 페이징 처리)

@@ -41,7 +41,7 @@ public class DiaryController {
     }
 
     @Operation(summary = "다이어리 수정")
-    @PutMapping
+    @PatchMapping
     public ResVo putDiary(@RequestBody DiaryUpdDto dto) {
         return service.updDiary(dto);
     }

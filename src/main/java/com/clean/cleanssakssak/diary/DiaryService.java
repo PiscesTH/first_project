@@ -20,15 +20,21 @@ public class DiaryService {
 
     //다이어리 &사진 등록
     public ResVo postDiary(DiaryInsDto dto) {
+        if (dto.getTitle() == null || dto.getTitle().isBlank()){
+            return new ResVo(Const.TITLE_NOT_EXIST);    //title 없으면 -1
+        }
         int insDiaryResult = mapper.insDiary(dto);
+        if (dto.getPics() == null){
+            return new ResVo(dto.getDiaryId());
+        }
         List<String> picsList = new ArrayList<>();
         for (String pic : dto.getPics()) {
-            if (!pic.isBlank()) {
+            if (pic != null && !pic.isBlank()) {
                 picsList.add(pic);
             }
         }
         dto.setPics(picsList);
-        if (dto.getPics() != null && !dto.getPics().isEmpty()) {
+        if (!dto.getPics().isEmpty()) {
             int insPicsResult = mapper.insDiaryPics(dto);
         }
         return new ResVo(dto.getDiaryId());
@@ -78,18 +84,17 @@ public class DiaryService {
                 .build());
         List<String> picsList = new ArrayList<>();
         for (String pic : dto.getPics()) {
-            if (!pic.isBlank()) {
+            if (pic != null && !pic.isBlank()) {
                 picsList.add(pic);
             }
         }
         dto.setPics(picsList);
-        if (dto.getPics() == null || dto.getPics().isEmpty()) {
-            return new ResVo(Const.SUCCESS);
+        if (picsList.isEmpty()) {
+            int insPicsResult = mapper.insDiaryPics(DiaryInsDto.builder()
+                    .diaryId(dto.getDiaryId())
+                    .pics(dto.getPics())
+                    .build());
         }
-        int insPicsResult = mapper.insDiaryPics(DiaryInsDto.builder()
-                .diaryId(dto.getDiaryId())
-                .pics(dto.getPics())
-                .build());
         return new ResVo(Const.SUCCESS);
     }
 }
