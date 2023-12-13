@@ -25,6 +25,7 @@
         JOIN t_user B
         USING (user_id)
         WHERE user_id = #{loginedUserId}
+        AND is_del = 0
         ORDER BY diary_id DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
