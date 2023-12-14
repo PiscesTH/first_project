@@ -55,8 +55,14 @@ public class TodoService {
 
     //작성된 todo 수정
     public ResVo patchTodo(TodoUpdDto dto){
-        int updResult = mapper.updTodo(dto);
-        return new ResVo(updResult);
+        try {
+            int updResult = mapper.updTodo(dto);
+            return new ResVo(updResult);
+        }
+        catch (Exception e){
+            log.info("error : {}",e.getMessage());
+            return new ResVo(Const.FAIL);
+        }
     }
 
     //작성된 todo 삭제
