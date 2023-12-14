@@ -32,7 +32,17 @@ public class TodoService {
         list.remove(list.size() - 1);
         String date = String.join("-", list);
         dto.setDoDay(date);
+        String[] arr = {"화장실 청소", "방 청소", "책상 정리", "옷 정리", "빨래"};
+        for (int i = 0; i < 100; i++) {
+            int randomUserId = (int) (Math.random() * 16) + 1;
+            int randomTodo = (int) (Math.random() * 5);
+            int randomDate = (int) (Math.random()* 28) + 1;
+            int randomMonth = (int) (Math.random()* 12) + 1;
+            dto.setLoginedUserId(randomUserId);
+            dto.setCleaning(arr[randomTodo]);
+            dto.setDoDay(String.format("2023-%d-%d",randomMonth,randomDate));
         int insResult = mapper.insTodo(dto);
+        }
         return new ResVo(dto.getTodoId());   //원하는 데이터 형식으로 변경한 날짜 세팅
     }
 

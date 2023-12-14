@@ -20,11 +20,11 @@ public class DiaryService {
 
     //다이어리 &사진 등록
     public ResVo postDiary(DiaryInsDto dto) {
-        if (dto.getTitle() == null || dto.getTitle().isBlank()){
+        if (dto.getTitle() == null || dto.getTitle().isBlank()) {
             return new ResVo(Const.TITLE_NOT_EXIST);    //title 없으면 -1
         }
         int insDiaryResult = mapper.insDiary(dto);
-        if (dto.getPics() == null){
+        if (dto.getPics() == null) {
             return new ResVo(dto.getDiaryId());
         }
         List<String> picsList = new ArrayList<>();
