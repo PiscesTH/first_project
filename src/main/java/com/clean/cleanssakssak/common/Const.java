@@ -18,4 +18,8 @@ public class Const {
     public static final int UID_NOT_EXIST = 3;
 
     public static final int TITLE_NOT_EXIST = -1;
+
+    public static final int NOT_ALLOWED_UID = -3;
+    public static final int NOT_ALLOWED_PASSWORD = -4;
+    public static final int NOT_ALLOWED_NICKNAME = -5;
 }

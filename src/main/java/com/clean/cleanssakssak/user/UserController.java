@@ -20,7 +20,10 @@ public class UserController {
     @Operation(summary = "회원 가입", description = """
             result = userId pk값 : 회원가입 성공<br>
             result = -1 : 아이디 중복<br>
-            result = -2 : 닉네임 중복
+            result = -2 : 닉네임 중복<br>
+            result = -3 : 허용되지 않는 아이디<br>
+            result = -4 : 허용되지 않는 비밀번호<br>
+            result = -5 : 허용되지 않는 닉네임
             """)
     @PostMapping("/api/signup")
     public ResVo postSignup(@RequestBody UserInsDto dto) {
@@ -39,7 +42,8 @@ public class UserController {
 
     @Operation(summary = "유저의 비밀번호/닉네임 변경 처리", description = """
             result = 0 : 변경 실패<br>
-            result > 0 : 변경 성공
+            result > 0 : 변경 성공<br>
+            result = -4 : 허용되지 않는 비밀번호
             """)
     @PatchMapping("/profile")
     public ResVo patchProfile(@RequestBody UserUbdDto dto){

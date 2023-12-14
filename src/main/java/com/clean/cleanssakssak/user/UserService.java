@@ -13,11 +13,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserMapper mapper;
-    
+
     //유저 회원가입 처리
     public ResVo postSignup(UserInsDto dto) {
-        if (dto.getUpw() == null || dto.getUpw().isBlank()){
-            return new ResVo(Const.FAIL);
+        if (dto.getUid() == null || dto.getUid().isBlank() || dto.getUid().contains(" ")) {
+            return new ResVo(Const.NOT_ALLOWED_UID);
+        }
+        if (dto.getUpw() == null || dto.getUpw().isBlank() || dto.getUpw().contains(" ")) {
+            return new ResVo(Const.NOT_ALLOWED_PASSWORD);
+        }
+        if (dto.getNickname() == null || dto.getNickname().isBlank()) {
+            return new ResVo(Const.NOT_ALLOWED_NICKNAME);
         }
         UserLoginProcDto checkUid = mapper.selUserLoginInfo(dto.getUid());
         if (checkUid != null) {
@@ -32,7 +38,7 @@ public class UserService {
         int insResult = mapper.insUser(dto);
         return new ResVo(dto.getUserId());
     }
-    
+
     //유저 로그인 처리
     public UserLoginVo postSignin(UserLoginDto dto) {
         UserLoginProcDto pDto = mapper.selUserLoginInfo(dto.getUid());
@@ -52,25 +58,27 @@ public class UserService {
         }
         return resultVo;
     }
-    
+
     //유저 회원정보(비밀번호, 닉네임) 변경 처리
-    public ResVo patchProfile(UserUbdDto dto){
+    public ResVo patchProfile(UserUbdDto dto) {
+        if (dto.getUpw() != null && dto.getUpw().contains(" ")) {
+            return new ResVo(Const.NOT_ALLOWED_PASSWORD);
+        }
         int updResult = 0;
-        if (dto.getUpw() != null && !dto.getUpw().isBlank()){
-            String hashedUpw = BCrypt.hashpw(dto.getUpw(),BCrypt.gensalt());
+        if (dto.getUpw() != null && !dto.getUpw().isBlank()) {
+            String hashedUpw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());
             dto.setUpw(hashedUpw);
-            //updResult += mapper.updUserUpw(dto);
+            updResult += mapper.updUserUpw(dto);
         }
         Integer nicknameCheck = mapper.selUserByNickname(dto.getNickname());
-        /*if (nicknameCheck == null && dto.getNickname() != null && !dto.getNickname().isBlank()){
+        if (nicknameCheck == null && dto.getNickname() != null && !dto.getNickname().isBlank()) {
             updResult += mapper.updUserNickname(dto);
-        }*/
-        updResult = mapper.updUserUpw(dto);
+        }
         return new ResVo(updResult);
     }
-    
+
     //유저 회원탈퇴 처리
-    public ResVo delProfile(int loginedUserId){
+    public ResVo delProfile(int loginedUserId) {
         int delResult = mapper.delUser(loginedUserId);
         return new ResVo(delResult);
     }
