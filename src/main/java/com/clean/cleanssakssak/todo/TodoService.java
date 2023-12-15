@@ -50,7 +50,6 @@ public class TodoService {
             Date formatDate = bDateFormat.parse(tmpDate);
             String resultDate = aDateFormat.format(formatDate);
             dto.setDoDay(resultDate);
-            log.info("dto : {}",dto);
         }
         catch (Exception e){
             e.printStackTrace();

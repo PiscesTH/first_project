@@ -74,6 +74,9 @@ public class UserService {
             dto.setUpw(hashedUpw);
             updResult += mapper.updUserUpw(dto);
         }
+        if (dto.getNickname() == null){
+            return new ResVo(updResult);
+        }
         Integer nicknameCheck = mapper.selUserByNickname(dto.getNickname());
         if (nicknameCheck == null && dto.getNickname() != null && !dto.getNickname().isBlank()) {
             updResult += mapper.updUserNickname(dto);
