@@ -61,7 +61,7 @@ public class TodoService {
         }
         catch (Exception e){
             log.info("error : {}",e.getMessage());
-            return new ResVo(Const.FAIL);
+            return new ResVo(Const.FAIL, e.getMessage());
         }
     }
 

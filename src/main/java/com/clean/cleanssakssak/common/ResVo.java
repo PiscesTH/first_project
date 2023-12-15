@@ -7,4 +7,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ResVo {
     private int result;
+    private String errorMsg;
+
+    public ResVo(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public ResVo(int result) {
+        this.result = result;
+    }
 }

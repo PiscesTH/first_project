@@ -24,7 +24,10 @@ public class DiaryService {
             return new ResVo(Const.TITLE_NOT_EXIST);    //title 없으면 -1
         }
         int insDiaryResult = mapper.insDiary(dto);
-        if (dto.getPics() == null) {
+        if (insDiaryResult == 0){
+            return new ResVo(Const.FAIL);
+        }
+        if (dto.getPics() == null || dto.getPics().isEmpty()) {
             return new ResVo(dto.getDiaryId());
         }
         List<String> picsList = new ArrayList<>();

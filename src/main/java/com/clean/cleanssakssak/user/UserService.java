@@ -41,6 +41,10 @@ public class UserService {
 
     //유저 로그인 처리
     public UserLoginVo postSignin(UserLoginDto dto) {
+        if (dto.getUid() == null || dto.getUid().isBlank()
+                || dto.getUpw() == null || dto.getUpw().isBlank()) {
+            return null;
+        }
         UserLoginProcDto pDto = mapper.selUserLoginInfo(dto.getUid());
         UserLoginVo resultVo = UserLoginVo.builder()
                 .result(Const.UPW_INCORRECT)
