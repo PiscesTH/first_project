@@ -77,6 +77,9 @@ public class DiaryService {
 
     //등록된 다이어리 &사진 수정
     public ResVo updDiary(DiaryUpdDto dto) {
+        if (dto.getTitle() == null || dto.getTitle().isBlank()){
+            return new ResVo(Const.TITLE_NOT_EXIST);
+        }
         int updDiaryResult = mapper.updDiary(dto);
         if (updDiaryResult == 0) {
             return new ResVo(Const.FAIL);

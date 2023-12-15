@@ -7,10 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -26,12 +24,13 @@ public class TodoService {
         if (dto.getDoDay() == null || dto.getDoDay().isBlank()){    //do_day 데이터가 null 이거나 공백만 있는 경우 체크
             return new ResVo(Const.FAIL);
         }
-        String[] tmp = dto.getDoDay().split("/");   //입력받은 날짜 데이터 원하는 형식으로 변경
+        /*String[] tmp = dto.getDoDay().split("/");   //입력받은 날짜 데이터 원하는 형식으로 변경
         List<String> list = new ArrayList<>(Arrays.asList(tmp));
         list.add(0, list.get(list.size() - 1));
         list.remove(list.size() - 1);
         String date = String.join("-", list);
-        dto.setDoDay(date);
+        dto.setDoDay(date);*/
+ /*
         String[] arr = {"화장실 청소", "방 청소", "책상 정리", "옷 정리", "빨래"};
         for (int i = 0; i < 100; i++) {
             int randomUserId = (int) (Math.random() * 16) + 1;
@@ -41,8 +40,22 @@ public class TodoService {
             dto.setLoginedUserId(randomUserId);
             dto.setCleaning(arr[randomTodo]);
             dto.setDoDay(String.format("2023-%d-%d",randomMonth,randomDate));
+
         int insResult = mapper.insTodo(dto);
+        }*/
+        try {
+            String tmpDate = dto.getDoDay();
+            SimpleDateFormat bDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat aDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date formatDate = bDateFormat.parse(tmpDate);
+            String resultDate = aDateFormat.format(formatDate);
+            dto.setDoDay(resultDate);
+            log.info("dto : {}",dto);
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        int insResult = mapper.insTodo(dto);
         return new ResVo(dto.getTodoId());   //원하는 데이터 형식으로 변경한 날짜 세팅
     }
 

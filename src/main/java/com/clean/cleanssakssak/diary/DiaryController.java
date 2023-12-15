@@ -18,7 +18,8 @@ public class DiaryController {
 
     @Operation(summary = "다이어리 작성", description = """
             result > 0 : 다이어리 작성 성공. pk값 리턴<br>
-            result = 0 : 다이어리 작성 실패
+            result = 0 : 다이어리 작성 실패<br>
+            result = -1 : 다이어리 제목 없음
             """)
     @PostMapping
     public ResVo postDiary(@RequestBody DiaryInsDto dto){
@@ -40,7 +41,11 @@ public class DiaryController {
         return service.getDiaryAll(dto);
     }
 
-    @Operation(summary = "다이어리 수정")
+    @Operation(summary = "다이어리 수정", description = """
+            result = 1 : 다이어리 수정 성공. pk값 리턴<br>
+            result = 0 : 다이어리 수정 실패<br>
+            result = -1 : 다이어리 제목 없음
+            """)
     @PatchMapping
     public ResVo putDiary(@RequestBody DiaryUpdDto dto) {
         return service.updDiary(dto);
