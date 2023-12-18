@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -17,6 +18,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final TodoMapper todoMappermapper;
     private final DiaryMapper diaryMappermapper;
+
     //유저 회원가입 처리
     public ResVo postSignup(UserInsDto dto) {
         if (dto.getUid() == null || dto.getUid().isBlank() || dto.getUid().contains(" ")) {
@@ -77,7 +79,7 @@ public class UserService {
             dto.setUpw(hashedUpw);
             updResult += userMapper.updUserUpw(dto);
         }
-        if (dto.getNickname() == null){
+        if (dto.getNickname() == null) {
             return new ResVo(updResult);
         }
         Integer nicknameCheck = userMapper.selUserByNickname(dto.getNickname());
@@ -87,12 +89,11 @@ public class UserService {
         return new ResVo(updResult);
     }
 
-    //유저 회원탈퇴 처리
     public ResVo delProfile(int loginedUserId) {
-        int delDiaryPicResult = diaryMappermapper.delDiaryPicForUnregister(loginedUserId);
-        int delDiaryResult = diaryMappermapper.delDiaryForUnregister(loginedUserId);
-        int delTodoResult = todoMappermapper.delTodoForUnregister(loginedUserId);
-        int delResult = userMapper.delUser(loginedUserId);
-        return new ResVo(delResult);
+            int delTodoResult = todoMappermapper.delTodoForUnregister(loginedUserId);
+            int delDiaryResult = diaryMappermapper.delDiaryForUnregister(loginedUserId);
+            int delDiaryPicResult = diaryMappermapper.delDiaryPicForUnregister(loginedUserId);
+            int delResult = userMapper.delUser(loginedUserId);
+            return new ResVo(delResult);
     }
 }
