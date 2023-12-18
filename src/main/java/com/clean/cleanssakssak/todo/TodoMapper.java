@@ -12,4 +12,5 @@ public interface TodoMapper {
     int updTodo(TodoUpdDto dto);
     int delTodo(TodoToggleDto dto);
     int toggleCheck(TodoToggleDto dto);
+    int delTodoForUnregister(int loginedUserId);
 }

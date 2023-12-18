@@ -2,6 +2,8 @@ package com.clean.cleanssakssak.user;
 
 import com.clean.cleanssakssak.common.Const;
 import com.clean.cleanssakssak.common.ResVo;
+import com.clean.cleanssakssak.diary.DiaryMapper;
+import com.clean.cleanssakssak.todo.TodoMapper;
 import com.clean.cleanssakssak.user.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +14,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final UserMapper mapper;
-
+    private final UserMapper userMapper;
+    private final TodoMapper todoMappermapper;
+    private final DiaryMapper diaryMappermapper;
     //유저 회원가입 처리
     public ResVo postSignup(UserInsDto dto) {
         if (dto.getUid() == null || dto.getUid().isBlank() || dto.getUid().contains(" ")) {
@@ -25,17 +28,17 @@ public class UserService {
         if (dto.getNickname() == null || dto.getNickname().isBlank()) {
             return new ResVo(Const.NOT_ALLOWED_NICKNAME);
         }
-        UserLoginProcDto checkUid = mapper.selUserLoginInfo(dto.getUid());
+        UserLoginProcDto checkUid = userMapper.selUserLoginInfo(dto.getUid());
         if (checkUid != null) {
             return new ResVo(Const.UID_DUPLICATED);
         }
-        Integer checkNickname = mapper.selUserByNickname(dto.getNickname());
+        Integer checkNickname = userMapper.selUserByNickname(dto.getNickname());
         if (checkNickname != null) {
             return new ResVo(Const.NICKNAME_DUPLICATED);
         }
         String hashedUpw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());
         dto.setUpw(hashedUpw);
-        int insResult = mapper.insUser(dto);
+        int insResult = userMapper.insUser(dto);
         return new ResVo(dto.getUserId());
     }
 
@@ -45,7 +48,7 @@ public class UserService {
                 || dto.getUpw() == null || dto.getUpw().isBlank()) {
             return null;
         }
-        UserLoginProcDto pDto = mapper.selUserLoginInfo(dto.getUid());
+        UserLoginProcDto pDto = userMapper.selUserLoginInfo(dto.getUid());
         UserLoginVo resultVo = UserLoginVo.builder()
                 .result(Const.UPW_INCORRECT)
                 .build();
@@ -72,21 +75,24 @@ public class UserService {
         if (dto.getUpw() != null && !dto.getUpw().isBlank()) {
             String hashedUpw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());
             dto.setUpw(hashedUpw);
-            updResult += mapper.updUserUpw(dto);
+            updResult += userMapper.updUserUpw(dto);
         }
         if (dto.getNickname() == null){
             return new ResVo(updResult);
         }
-        Integer nicknameCheck = mapper.selUserByNickname(dto.getNickname());
+        Integer nicknameCheck = userMapper.selUserByNickname(dto.getNickname());
         if (nicknameCheck == null && dto.getNickname() != null && !dto.getNickname().isBlank()) {
-            updResult += mapper.updUserNickname(dto);
+            updResult += userMapper.updUserNickname(dto);
         }
         return new ResVo(updResult);
     }
 
     //유저 회원탈퇴 처리
     public ResVo delProfile(int loginedUserId) {
-        int delResult = mapper.delUser(loginedUserId);
+        int delDiaryPicResult = diaryMappermapper.delDiaryPicForUnregister(loginedUserId);
+        int delDiaryResult = diaryMappermapper.delDiaryForUnregister(loginedUserId);
+        int delTodoResult = todoMappermapper.delTodoForUnregister(loginedUserId);
+        int delResult = userMapper.delUser(loginedUserId);
         return new ResVo(delResult);
     }
 }

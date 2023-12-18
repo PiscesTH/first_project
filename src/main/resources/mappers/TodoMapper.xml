@@ -38,4 +38,9 @@
         SET is_checked = (1 - is_checked)
         WHERE (todo_id, user_id) = (#{todoId}, #{loginedUserId})
     </update>
+
+    <delete id="delTodoForUnregister">
+        DELETE FROM t_todo
+        WHERE user_id = #{loginedUserId}
+    </delete>
 </mapper>

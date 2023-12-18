@@ -14,4 +14,6 @@ public interface DiaryMapper {
     int delDiary(DiaryDelDto dto);
     int delDiaryPics(DiaryDelDto dto);
     int updDiary(DiaryUpdDto dto);
+    int delDiaryPicForUnregister(int loginedUserId);
+    int delDiaryForUnregister(int loginedUserId);
 }
