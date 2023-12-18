@@ -38,4 +38,17 @@
         DELETE FROM t_user
         WHERE user_id = #{loginedUserId}
     </delete>
+
+    <update id="updUserInfo">
+        UPDATE
+        <set>
+            <if test="upw != null and upw != ''">
+                upw = #{upw}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                AND nickname = #{nickname}
+            </if>
+        </set>
+        WHERE user_id = #{loginedUserId}
+    </update>
 </mapper>

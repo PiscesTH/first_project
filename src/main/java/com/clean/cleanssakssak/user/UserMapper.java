@@ -11,4 +11,6 @@ public interface UserMapper {
     int updUserUpw(UserUbdDto dto);
     int updUserNickname(UserUbdDto dto);
     int delUser(int loginedUserId);
+
+    int updUserInfo(UserUbdDto dto);
 }
