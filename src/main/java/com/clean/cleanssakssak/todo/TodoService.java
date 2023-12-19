@@ -53,7 +53,8 @@ public class TodoService {
             dto.setDoDay(resultDate);
         }
         catch (Exception e){
-            e.printStackTrace();
+            log.info("error : {}",e.getMessage());
+            return new ResVo(Const.FAIL ,e.getMessage());
         }
         int insResult = mapper.insTodo(dto);
         return new ResVo(dto.getTodoId());   //원하는 데이터 형식으로 변경한 날짜 세팅
