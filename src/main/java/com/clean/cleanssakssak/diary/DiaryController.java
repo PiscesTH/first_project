@@ -23,7 +23,6 @@ public class DiaryController {
             """)
     @PostMapping
     public ResVo postDiary(@RequestBody DiaryInsDto dto){
-        log.info("dto : {}", dto);
         return service.postDiary(dto);
     }
 

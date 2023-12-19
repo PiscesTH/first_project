@@ -21,7 +21,7 @@ public class TodoService {
         if (dto.getCleaning() == null || dto.getCleaning().isBlank()){  //cleaning 데이터가 null 이거나 공백만 있는 경우 체크
             return new ResVo(Const.FAIL);
         }
-        if (dto.getDoDay() == null || dto.getDoDay().isBlank()){    //do_day 데이터가 null 이거나 공백만 있는 경우 체크
+        if (dto.getDoDay() == null){    //do_day 데이터가 null 이거나 공백만 있는 경우 체크
             return new ResVo(Const.FAIL);
         }
         /*String[] tmp = dto.getDoDay().split("/");   //입력받은 날짜 데이터 원하는 형식으로 변경
@@ -30,7 +30,9 @@ public class TodoService {
         list.remove(list.size() - 1);
         String date = String.join("-", list);
         dto.setDoDay(date);*/
- /*
+
+ /*     더미데이터 생성용
+
         String[] arr = {"화장실 청소", "방 청소", "책상 정리", "옷 정리", "빨래"};
         for (int i = 0; i < 100; i++) {
             int randomUserId = (int) (Math.random() * 16) + 1;
@@ -44,11 +46,10 @@ public class TodoService {
         int insResult = mapper.insTodo(dto);
         }*/
         try {
-            String tmpDate = dto.getDoDay();
-            SimpleDateFormat bDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Date tmpDate = dto.getDoDay();
             SimpleDateFormat aDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date formatDate = bDateFormat.parse(tmpDate);
-            String resultDate = aDateFormat.format(formatDate);
+            String formattedDate = aDateFormat.format(tmpDate);
+            Date resultDate = aDateFormat.parse(formattedDate);
             dto.setDoDay(resultDate);
         }
         catch (Exception e){
