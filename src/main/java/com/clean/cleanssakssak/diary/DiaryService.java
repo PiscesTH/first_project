@@ -30,15 +30,10 @@ public class DiaryService {
         if (dto.getPics() == null || dto.getPics().isEmpty()) {
             return new ResVo(dto.getDiaryId());
         }
-        List<String> picsList = new ArrayList<>();
         for (String pic : dto.getPics()) {
-            if (pic != null && !pic.isBlank()) {
-                picsList.add(pic);
+            if (pic != null && !pic.isBlank()){
+                int insPicsResult = mapper.insDiaryPics(dto);
             }
-        }
-        dto.setPics(picsList);
-        if (!dto.getPics().isEmpty()) {
-            int insPicsResult = mapper.insDiaryPics(dto);
         }
         return new ResVo(dto.getDiaryId());
     }
