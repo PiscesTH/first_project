@@ -30,10 +30,15 @@ public class DiaryService {
         if (dto.getPics() == null || dto.getPics().isEmpty()) {
             return new ResVo(dto.getDiaryId());
         }
+        List<String> picsList = new ArrayList<>();
         for (String pic : dto.getPics()) {
-            if (pic != null && !pic.isBlank()){
-                int insPicsResult = mapper.insDiaryPics(dto);
+            if (pic != null && !pic.isBlank()) {    //받은 사진 데이터가 null or 빈 문자열인지 체크
+                picsList.add(pic);                  //저장할 사진 데이터 분류
             }
+        }
+        dto.setPics(picsList);  //분류한 사진 데이터 세팅
+        if (!picsList.isEmpty()) {  //등록할 사진 있는지 체크
+            int insPicsResult = mapper.insDiaryPics(dto);
         }
         return new ResVo(dto.getDiaryId());
     }
