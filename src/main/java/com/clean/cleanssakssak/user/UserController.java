@@ -6,6 +6,7 @@ import com.clean.cleanssakssak.user.model.UserLoginDto;
 import com.clean.cleanssakssak.user.model.UserLoginVo;
 import com.clean.cleanssakssak.user.model.UserUbdDto;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class UserController {
             result = -5 : 허용되지 않는 닉네임
             """)
     @PostMapping("/api/signup")
-    public ResVo postSignup(@RequestBody UserInsDto dto) {
+    public ResVo postSignup(@Valid @RequestBody UserInsDto dto) {
         return service.postSignup(dto);
     }
 

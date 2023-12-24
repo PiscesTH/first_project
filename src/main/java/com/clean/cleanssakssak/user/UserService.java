@@ -21,15 +21,15 @@ public class UserService {
 
     //유저 회원가입 처리
     public ResVo postSignup(UserInsDto dto) {
-        if (dto.getUid() == null || dto.getUid().isBlank() || dto.getUid().contains(" ")) {
-            return new ResVo(Const.NOT_ALLOWED_UID);
-        }
-        if (dto.getUpw() == null || dto.getUpw().isBlank() || dto.getUpw().contains(" ")) {
-            return new ResVo(Const.NOT_ALLOWED_PASSWORD);
-        }
-        if (dto.getNickname() == null || dto.getNickname().isBlank()) {
-            return new ResVo(Const.NOT_ALLOWED_NICKNAME);
-        }
+//        if (dto.getUid() == null || dto.getUid().isBlank() || dto.getUid().contains(" ")) {
+//            return new ResVo(Const.NOT_ALLOWED_UID);
+//        }
+//        if (dto.getUpw() == null || dto.getUpw().isBlank() || dto.getUpw().contains(" ")) {
+//            return new ResVo(Const.NOT_ALLOWED_PASSWORD);
+//        }
+//        if (dto.getNickname() == null || dto.getNickname().isBlank()) {
+//            return new ResVo(Const.NOT_ALLOWED_NICKNAME);
+//        }
         UserLoginProcDto checkUid = userMapper.selUserLoginInfo(dto.getUid());
         if (checkUid != null) {
             return new ResVo(Const.UID_DUPLICATED);
