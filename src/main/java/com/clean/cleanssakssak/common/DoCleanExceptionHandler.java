@@ -3,6 +3,8 @@ package com.clean.cleanssakssak.common;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -14,14 +16,24 @@ import java.util.Map;
 public class DoCleanExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<Map<String, String>> ExceptionHandler(Exception e){
+    public ResponseEntity<Map<String, String>> ExceptionHandler(MethodArgumentNotValidException e){
         HttpHeaders responseHeaders = new HttpHeaders();
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
+//        Map<String, String> map = new HashMap<>();
+//        map.put("error type", httpStatus.getReasonPhrase());
+//        map.put("code", "400");
+//        map.put("message", e.getMessage());
+
         Map<String, String> map = new HashMap<>();
-        map.put("error type", httpStatus.getReasonPhrase());
-        map.put("code", "400");
-        map.put("message", e.getMessage());
+        BindingResult bindingResult = e.getBindingResult();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            map.put("error type", httpStatus.getReasonPhrase());
+            map.put("code", "400");
+            map.put("message", fieldError.getDefaultMessage());
+            map.put("error position", fieldError.getField());
+            map.put("입력된 값", (String)fieldError.getRejectedValue());
+        }
 
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }
