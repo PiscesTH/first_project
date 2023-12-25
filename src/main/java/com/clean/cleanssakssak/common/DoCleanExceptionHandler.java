@@ -15,15 +15,9 @@ import java.util.Map;
 @RestControllerAdvice
 public class DoCleanExceptionHandler {
 
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> ExceptionHandler(MethodArgumentNotValidException e){
-        HttpHeaders responseHeaders = new HttpHeaders();
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-
-//        Map<String, String> map = new HashMap<>();
-//        map.put("error type", httpStatus.getReasonPhrase());
-//        map.put("code", "400");
-//        map.put("message", e.getMessage());
 
         Map<String, String> map = new HashMap<>();
         BindingResult bindingResult = e.getBindingResult();
@@ -35,6 +29,20 @@ public class DoCleanExceptionHandler {
             map.put("입력된 값", (String)fieldError.getRejectedValue());
         }
 
+        return new ResponseEntity<>(map, httpStatus);
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<Map<String, String>> ExceptionHandler(Exception e){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        Map<String, String> map = new HashMap<>();
+        map.put("error type", httpStatus.getReasonPhrase());
+        map.put("code", "400");
+        map.put("message", e.getMessage());
+
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }
+
 }
