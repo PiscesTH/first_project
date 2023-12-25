@@ -23,7 +23,7 @@ public class DoCleanExceptionHandler {
         BindingResult bindingResult = e.getBindingResult();
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
             map.put("error type", httpStatus.getReasonPhrase());
-            map.put("code", "400");
+            map.put("code", String.valueOf(httpStatus.value()));
             map.put("message", fieldError.getDefaultMessage());
             map.put("error position", fieldError.getField());
             map.put("입력된 값", (String)fieldError.getRejectedValue());
@@ -39,7 +39,7 @@ public class DoCleanExceptionHandler {
 
         Map<String, String> map = new HashMap<>();
         map.put("error type", httpStatus.getReasonPhrase());
-        map.put("code", "400");
+        map.put("code", String.valueOf(httpStatus.value()));
         map.put("message", e.getMessage());
 
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
