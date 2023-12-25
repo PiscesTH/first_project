@@ -42,6 +42,7 @@ public class UserService {
         dto.setUpw(hashedUpw);
         int insResult = userMapper.insUser(dto);
         return new ResVo(dto.getUserId());
+
     }
 
     //유저 로그인 처리
@@ -90,10 +91,10 @@ public class UserService {
     }
 
     public ResVo delProfile(int loginedUserId) {
-            int delTodoResult = todoMappermapper.delTodoForUnregister(loginedUserId);
-            int delDiaryResult = diaryMappermapper.delDiaryForUnregister(loginedUserId);
-            int delDiaryPicResult = diaryMappermapper.delDiaryPicForUnregister(loginedUserId);
-            int delResult = userMapper.delUser(loginedUserId);
-            return new ResVo(delResult);
+        int delTodoResult = todoMappermapper.delTodoForUnregister(loginedUserId);
+        int delDiaryResult = diaryMappermapper.delDiaryForUnregister(loginedUserId);
+        int delDiaryPicResult = diaryMappermapper.delDiaryPicForUnregister(loginedUserId);
+        int delResult = userMapper.delUser(loginedUserId);
+        return new ResVo(delResult);
     }
 }

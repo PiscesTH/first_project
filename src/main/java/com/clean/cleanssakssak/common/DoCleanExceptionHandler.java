@@ -9,6 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ import java.util.Map;
 public class DoCleanExceptionHandler {
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> ExceptionHandler(MethodArgumentNotValidException e){
+    public ResponseEntity<Map<String, String>> validExceptionHandler(MethodArgumentNotValidException e){
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
         Map<String, String> map = new HashMap<>();
@@ -32,15 +34,28 @@ public class DoCleanExceptionHandler {
         return new ResponseEntity<>(map, httpStatus);
     }
 
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<Map<String, String>> ExceptionHandler(Exception e){
+    @ExceptionHandler(value = {SQLSyntaxErrorException.class, IOException.class})
+    public ResponseEntity<Map<String, String>> exceptionHandler(Exception e){
         HttpHeaders responseHeaders = new HttpHeaders();
-        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 
         Map<String, String> map = new HashMap<>();
         map.put("error type", httpStatus.getReasonPhrase());
         map.put("code", String.valueOf(httpStatus.value()));
-        map.put("message", e.getMessage());
+        map.put("message", "서버에 문제가 발생했습니다. 다시 시도해주세요.");
+
+        return new ResponseEntity<>(map, responseHeaders, httpStatus);
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<Map<String, String>> otherExceptionHandler(Exception e){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        Map<String, String> map = new HashMap<>();
+        map.put("error type", httpStatus.getReasonPhrase());
+        map.put("code", String.valueOf(httpStatus.value()));
+        map.put("message", "에러가 발생했습니다. 관리자에게 문의해주세요.");
 
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }
