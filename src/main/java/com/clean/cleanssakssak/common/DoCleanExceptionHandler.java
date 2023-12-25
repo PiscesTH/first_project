@@ -34,28 +34,15 @@ public class DoCleanExceptionHandler {
         return new ResponseEntity<>(map, httpStatus);
     }
 
-    @ExceptionHandler(value = {SQLSyntaxErrorException.class, IOException.class})
+    @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Map<String, String>> exceptionHandler(Exception e){
         HttpHeaders responseHeaders = new HttpHeaders();
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 
         Map<String, String> map = new HashMap<>();
         map.put("error type", httpStatus.getReasonPhrase());
-        map.put("code", String.valueOf(httpStatus.value()));
+        map.put("code", "500");
         map.put("message", "서버에 문제가 발생했습니다. 다시 시도해주세요.");
-
-        return new ResponseEntity<>(map, responseHeaders, httpStatus);
-    }
-
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<Map<String, String>> otherExceptionHandler(Exception e){
-        HttpHeaders responseHeaders = new HttpHeaders();
-        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-
-        Map<String, String> map = new HashMap<>();
-        map.put("error type", httpStatus.getReasonPhrase());
-        map.put("code", String.valueOf(httpStatus.value()));
-        map.put("message", "에러가 발생했습니다. 관리자에게 문의해주세요.");
 
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }
