@@ -3,6 +3,7 @@ package com.clean.cleanssakssak.todo;
 import com.clean.cleanssakssak.common.ResVo;
 import com.clean.cleanssakssak.todo.model.*;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class TodoController {
 
     @Operation(summary = "청소 할 일 등록", description = "등록 성공 : todo_id 값 리턴 / 등록 실패 : 0 ")
     @PostMapping
-    public ResVo postTodo(@RequestBody TodoInsDto dto) {
+    public ResVo postTodo(@Valid @RequestBody TodoInsDto dto) {
         return service.postTodo(dto);
     }
 
