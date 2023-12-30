@@ -30,10 +30,10 @@ public class UserService {
 //        if (dto.getNickname() == null || dto.getNickname().isBlank()) {
 //            return new ResVo(Const.NOT_ALLOWED_NICKNAME);
 //        }
-        UserLoginProcDto checkUid = userMapper.selUserLoginInfo(dto.getUid());
-        if (checkUid != null) {
-            return new ResVo(Const.UID_DUPLICATED);
-        }
+//        UserLoginProcDto checkUid = userMapper.selUserLoginInfo(dto.getUid());
+//        if (checkUid != null) {
+//            return new ResVo(Const.UID_DUPLICATED);
+//        }
         Integer checkNickname = userMapper.selUserByNickname(dto.getNickname());
         if (checkNickname != null) {
             return new ResVo(Const.NICKNAME_DUPLICATED);
@@ -47,10 +47,6 @@ public class UserService {
 
     //유저 로그인 처리
     public UserLoginVo postSignin(UserLoginDto dto) {
-        if (dto.getUid() == null || dto.getUid().isBlank()
-                || dto.getUpw() == null || dto.getUpw().isBlank()) {
-            return null;
-        }
         UserLoginProcDto pDto = userMapper.selUserLoginInfo(dto.getUid());
         UserLoginVo resultVo = UserLoginVo.builder()
                 .result(Const.UPW_INCORRECT)
@@ -71,9 +67,6 @@ public class UserService {
 
     //유저 회원정보(비밀번호, 닉네임) 변경 처리
     public ResVo patchProfile(UserUbdDto dto) {
-        if (dto.getUpw() != null && dto.getUpw().contains(" ")) {
-            return new ResVo(Const.NOT_ALLOWED_PASSWORD);
-        }
         int updResult = 0;
         if (dto.getUpw() != null && !dto.getUpw().isBlank()) {
             String hashedUpw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());

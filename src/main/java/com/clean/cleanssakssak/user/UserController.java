@@ -1,12 +1,13 @@
 package com.clean.cleanssakssak.user;
 
 import com.clean.cleanssakssak.common.ResVo;
+import com.clean.cleanssakssak.common.ValidationSequence;
 import com.clean.cleanssakssak.user.model.UserInsDto;
 import com.clean.cleanssakssak.user.model.UserLoginDto;
 import com.clean.cleanssakssak.user.model.UserLoginVo;
 import com.clean.cleanssakssak.user.model.UserUbdDto;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class UserController {
             result = -5 : 허용되지 않는 닉네임
             """)
     @PostMapping("/api/signup")
-    public ResVo postSignup(@Valid @RequestBody UserInsDto dto) {
+    public ResVo postSignup(@Validated(ValidationSequence.class) @RequestBody UserInsDto dto) {
         return service.postSignup(dto);
     }
 
@@ -37,7 +38,7 @@ public class UserController {
             result = 3 : 아이디 없음
             """)
     @PostMapping("/api/signin")
-    public UserLoginVo postSignin(@Valid @RequestBody UserLoginDto dto) {
+    public UserLoginVo postSignin(@Validated(ValidationSequence.class) @RequestBody UserLoginDto dto) {
         return service.postSignin(dto);
     }
 
@@ -47,7 +48,7 @@ public class UserController {
             result = -4 : 허용되지 않는 비밀번호
             """)
     @PatchMapping("/profile")
-    public ResVo patchProfile(@Valid @RequestBody UserUbdDto dto){
+    public ResVo patchProfile(@Validated(ValidationSequence.class) @RequestBody UserUbdDto dto){
         return service.patchProfile(dto);
     }
 
