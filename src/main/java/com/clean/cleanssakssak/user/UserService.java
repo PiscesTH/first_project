@@ -68,16 +68,11 @@ public class UserService {
     //유저 회원정보(비밀번호, 닉네임) 변경 처리
     public ResVo patchProfile(UserUbdDto dto) {
         int updResult = 0;
-        if (dto.getUpw() != null && !dto.getUpw().isBlank()) {
-            String hashedUpw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());
-            dto.setUpw(hashedUpw);
-            updResult += userMapper.updUserUpw(dto);
-        }
-        if (dto.getNickname() == null) {
-            return new ResVo(updResult);
-        }
+        String hashedUpw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());
+        dto.setUpw(hashedUpw);
+        updResult += userMapper.updUserUpw(dto);
         Integer nicknameCheck = userMapper.selUserByNickname(dto.getNickname());
-        if (nicknameCheck == null && dto.getNickname() != null && !dto.getNickname().isBlank()) {
+        if (nicknameCheck == null) {
             updResult += userMapper.updUserNickname(dto);
         }
         return new ResVo(updResult);
