@@ -37,7 +37,7 @@ public class UserController {
             result = 3 : 아이디 없음
             """)
     @PostMapping("/api/signin")
-    public UserLoginVo postSignin(@RequestBody UserLoginDto dto) {
+    public UserLoginVo postSignin(@Valid @RequestBody UserLoginDto dto) {
         return service.postSignin(dto);
     }
 
@@ -47,7 +47,7 @@ public class UserController {
             result = -4 : 허용되지 않는 비밀번호
             """)
     @PatchMapping("/profile")
-    public ResVo patchProfile(@RequestBody UserUbdDto dto){
+    public ResVo patchProfile(@Valid @RequestBody UserUbdDto dto){
         return service.patchProfile(dto);
     }
 

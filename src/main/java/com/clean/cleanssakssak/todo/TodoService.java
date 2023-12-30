@@ -17,7 +17,7 @@ public class TodoService {
     private final TodoMapper mapper;
 
     //청소 todo 하나 등록
-    public ResVo postTodo(TodoInsDto dto){
+    public ResVo postTodo(TodoInsDto dto) {
 /*        if (dto.getCleaning() == null || dto.getCleaning().isBlank()){  //cleaning 데이터가 null 이거나 공백만 있는 경우 체크
             return new ResVo(Const.FAIL);
         }
@@ -31,31 +31,6 @@ public class TodoService {
         String date = String.join("-", list);
         dto.setDoDay(date);*/
 
- /*     더미데이터 생성용
-
-        String[] arr = {"화장실 청소", "방 청소", "책상 정리", "옷 정리", "빨래"};
-        for (int i = 0; i < 100; i++) {
-            int randomUserId = (int) (Math.random() * 16) + 1;
-            int randomTodo = (int) (Math.random() * 5);
-            int randomDate = (int) (Math.random()* 28) + 1;
-            int randomMonth = (int) (Math.random()* 12) + 1;
-            dto.setLoginedUserId(randomUserId);
-            dto.setCleaning(arr[randomTodo]);
-            dto.setDoDay(String.format("2023-%d-%d",randomMonth,randomDate));
-
-        int insResult = mapper.insTodo(dto);
-        }*/
-        try {
-            Date tmpDate = dto.getDoDay();
-            SimpleDateFormat aDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String formattedDate = aDateFormat.format(tmpDate);
-            Date resultDate = aDateFormat.parse(formattedDate);
-            dto.setDoDay(resultDate);
-        }
-        catch (Exception e){
-            log.info("error : {}",e.getMessage());
-            return new ResVo(Const.FAIL ,e.getMessage());
-        }
         int insResult = mapper.insTodo(dto);
         return new ResVo(dto.getTodoId());   //원하는 데이터 형식으로 변경한 날짜 세팅
     }
@@ -63,24 +38,18 @@ public class TodoService {
     //등록한 todo 전체 조회(한 페이지에 8개씩 페이징 처리)
     public List<TodoSelAllVo> getTodoAll(TodoSelAllDto dto) {
         dto.setRowCount(Const.TODO_ROW_COUNT);
-        dto.setStartIdx((dto.getPage()-1) * Const.TODO_ROW_COUNT);
+        dto.setStartIdx((dto.getPage() - 1) * Const.TODO_ROW_COUNT);
         return mapper.selTodoAll(dto);
     }
 
     //작성된 todo 수정
-    public ResVo patchTodo(TodoUpdDto dto){
-        try {
-            int updResult = mapper.updTodo(dto);
-            return new ResVo(updResult);
-        }
-        catch (Exception e){
-            log.info("error : {}",e.getMessage());
-            return new ResVo(Const.FAIL, e.getMessage());
-        }
+    public ResVo patchTodo(TodoUpdDto dto) {
+        int updResult = mapper.updTodo(dto);
+        return new ResVo(updResult);
     }
 
     //작성된 todo 삭제
-    public ResVo delTodo(TodoToggleDto dto){
+    public ResVo delTodo(TodoToggleDto dto) {
         int delResult = mapper.delTodo(dto);
         return new ResVo(delResult);
     }
