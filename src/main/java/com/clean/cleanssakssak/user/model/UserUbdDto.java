@@ -1,6 +1,8 @@
 package com.clean.cleanssakssak.user.model;
 
 import com.clean.cleanssakssak.common.ValidationGroup;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +10,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserUbdDto {
     @Schema(description = "로그인 한 유저 pk")
     private int loginedUserId;

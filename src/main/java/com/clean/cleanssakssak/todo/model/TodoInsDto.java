@@ -1,20 +1,17 @@
 package com.clean.cleanssakssak.todo.model;
 
 import com.clean.cleanssakssak.common.ValidationGroup;
-import com.clean.cleanssakssak.common.ValidationSequence;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Schema(title = "청소 할 일 작성에 필요한 데이터")
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class TodoInsDto {
     @Schema(description = "로그인 한 유저의 userId")
     private int loginedUserId;
