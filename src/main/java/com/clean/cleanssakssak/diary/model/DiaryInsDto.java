@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -34,7 +33,7 @@ public class DiaryInsDto {
 
     @Schema(title = "다이어리 사진들")
     @NotNull(message = "사진을 두 장 선택해주세요.")
-    @Min(value = 2, message = "사진을 두 장 선택해주세요.")
+    @Size(min = 2, max = 2, message = "사진을 두 장 선택해주세요.")
     private List<@NotBlank(message = "올바르지 않은 사진 형식입니다.") String> pics;
 
 }
