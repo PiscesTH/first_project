@@ -1,5 +1,6 @@
 package com.clean.cleanssakssak.common;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -28,8 +30,14 @@ public class GlobalExceptionHandler {
             map.put("error position", fieldError.getField());
             map.put("입력된 값", (String)fieldError.getRejectedValue());
         }
-
         return new ResponseEntity<>(map, httpStatus);
+    }
+
+    @ExceptionHandler({ ConstraintViolationException.class })
+    public ResponseEntity<Object> handleValidList(final ConstraintViolationException ex) {
+        HashMap<String, Object> errMap = new HashMap<>();
+        errMap.put("msg", ex.getMessage());
+        return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {Exception.class})
