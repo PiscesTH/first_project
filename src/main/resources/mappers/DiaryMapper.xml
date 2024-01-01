@@ -20,18 +20,17 @@
     </insert>
 
     <select id="selDiaryAll">
-        SELECT A.diary_id AS diaryId, B.nickname, A.title, A.contents, A.created_at AS createdAt
+        SELECT A.diary_id, B.nickname, A.title, A.contents, A.created_at
         FROM t_diary A
         JOIN t_user B
         USING (user_id)
         WHERE user_id = #{loginedUserId}
-        AND A.is_del = 0
         ORDER BY diary_id DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
 
     <select id="selPicAll">
-        SELECT diary_id AS diaryId, pic
+        SELECT diary_id, pic
         FROM t_diary_pic
         WHERE diary_id
         <foreach collection="diaryIdList" item="diaryId" open="IN (" close=")" separator=",">
@@ -40,15 +39,14 @@
     </select>
 
     <delete id="delDiary">
-        UPDATE t_diary
-        SET is_del = 1
+        DELETE FROM t_diary
         WHERE diary_id = #{diaryId} AND user_id = #{loginedUserId}
     </delete>
 
     <delete id="delDiaryPics">
         DELETE B
         FROM t_diary A
-        LEFT JOIN t_diary_pic B
+        JOIN t_diary_pic B
         ON A.diary_id = B.diary_id
         WHERE A.diary_id = #{diaryId} AND A.user_id = #{loginedUserId}
     </delete>

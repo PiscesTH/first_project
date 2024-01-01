@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+//@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserUbdDto {
     @Schema(description = "로그인 한 유저 pk")
     private int loginedUserId;

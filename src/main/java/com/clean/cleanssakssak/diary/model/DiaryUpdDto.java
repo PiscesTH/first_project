@@ -11,7 +11,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+//@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DiaryUpdDto {
     @Schema(title = "다이어리 pk")
     private int diaryId;

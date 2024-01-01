@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DiarySelAllDto {
     @Schema(description = "로그인 한 유저 pk")
     private int loginedUserId;

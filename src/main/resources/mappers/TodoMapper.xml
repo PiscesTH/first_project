@@ -11,11 +11,11 @@
     </insert>
     
     <select id="selTodoAll">
-        SELECT todo_id AS todoId, cleaning,
-            do_day AS doDay, is_checked AS isChecked
+        SELECT todo_id, cleaning,
+            do_day, is_checked
         FROM t_todo
         WHERE user_id = #{loginedUserId}
-        AND is_del != 1
+        AND is_del == 0
         ORDER BY do_day
         LIMIT #{startIdx}, #{rowCount}
     </select>

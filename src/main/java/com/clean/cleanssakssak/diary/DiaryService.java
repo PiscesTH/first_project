@@ -77,17 +77,14 @@ public class DiaryService {
 
     //등록된 다이어리 &사진 수정
     public ResVo updDiary(DiaryUpdDto dto) {
-        if (dto.getTitle() == null || dto.getTitle().isBlank()){
-            return new ResVo(Const.TITLE_NOT_EXIST);
-        }
         int updDiaryResult = mapper.updDiary(dto);
         if (updDiaryResult == 0) {
             return new ResVo(Const.FAIL);
         }
-        int delPicsResult = mapper.delDiaryPics(DiaryDelDto.builder()
-                .diaryId(dto.getDiaryId())
-                .loginedUserId(dto.getLoginedUserId())
-                .build());
+        DiaryDelDto delDto = new DiaryDelDto();
+        delDto.setDiaryId(dto.getDiaryId());
+        delDto.setLoginedUserId(dto.getLoginedUserId());
+        int delPicsResult = mapper.delDiaryPics(delDto);
         List<String> picsList = new ArrayList<>();
         for (String pic : dto.getPics()) {
             if (pic != null && !pic.isBlank()) {

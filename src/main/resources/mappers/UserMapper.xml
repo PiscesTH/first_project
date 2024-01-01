@@ -17,7 +17,7 @@
     </select>
 
     <select id="selUserLoginInfo">
-        SELECT user_id AS userId, upw, nickname
+        SELECT user_id, upw, nickname
         FROM t_user
         WHERE uid = #{uid}
     </select>

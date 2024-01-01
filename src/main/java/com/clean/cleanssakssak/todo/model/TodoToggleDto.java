@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+//@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class TodoToggleDto {
     @Schema(description = "todo pk")
     private int todoId;

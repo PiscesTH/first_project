@@ -32,7 +32,7 @@ public class TodoController {
     }
 
     @Operation(summary = "청소 할 일 수정", description = "수정 성공 : 1 / 실패 : 0")
-    @PatchMapping
+    @PutMapping
     public ResVo patchTodo(@Validated(ValidationSequence.class) @RequestBody TodoUpdDto dto) {
         return service.patchTodo(dto);
     }

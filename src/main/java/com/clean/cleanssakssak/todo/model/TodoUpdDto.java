@@ -14,7 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @Data
-@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+//@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class TodoUpdDto {
     @Schema(description = "청소 내용")
     @NotBlank(message = "할 일을 입력해주세요.")

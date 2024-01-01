@@ -2,6 +2,7 @@ package com.clean.cleanssakssak.diary;
 
 import com.clean.cleanssakssak.common.ResVo;
 import com.clean.cleanssakssak.diary.model.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -38,6 +40,12 @@ public class DiaryController {
     public ResVo delDiary(DiaryDelDto dto){
         return service.delDiary(dto);
     }
+//    @DeleteMapping
+//    public ResVo delDiary(@RequestParam Map<String, Integer> params){
+//        ObjectMapper mapper = new ObjectMapper();
+//        DiaryDelDto dto = mapper.convertValue(params, DiaryDelDto.class);
+//        return service.delDiary(dto);
+//    }
 
     @Operation(summary = "다이어리 전제 조회", description = "10개씩 페이징 처리")
     @GetMapping
@@ -50,8 +58,8 @@ public class DiaryController {
             result = 0 : 다이어리 수정 실패<br>
             result = -1 : 다이어리 제목 없음
             """)
-    @PatchMapping
-    public ResVo putDiary(@RequestBody DiaryUpdDto dto) {
+    @PutMapping
+    public ResVo putDiary(@Valid @RequestBody DiaryUpdDto dto) {
         return service.updDiary(dto);
     }
 
