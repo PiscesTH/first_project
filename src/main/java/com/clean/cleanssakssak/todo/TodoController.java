@@ -33,7 +33,7 @@ public class TodoController {
 
     @Operation(summary = "청소 할 일 수정", description = "수정 성공 : 1 / 실패 : 0")
     @PatchMapping
-    public ResVo patchTodo(@RequestBody TodoUpdDto dto) {
+    public ResVo patchTodo(@Validated(ValidationSequence.class) @RequestBody TodoUpdDto dto) {
         return service.patchTodo(dto);
     }
 
@@ -43,7 +43,7 @@ public class TodoController {
         return service.delTodo(dto);
     }
 
-    @Operation(summary = "할 일 체크 처리", description = "체크 변경됨 : 1 / 변경 안됨 : 0")
+    @Operation(summary = "할 일 체크 처리", description = "체크 변경 성공 : 1 / 변경 실패 : 0")
     @PostMapping("/check")
     public ResVo toggleCheck(TodoToggleDto dto) {
         return service.toggleCheck(dto);

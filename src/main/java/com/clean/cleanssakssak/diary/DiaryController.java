@@ -3,6 +3,7 @@ package com.clean.cleanssakssak.diary;
 import com.clean.cleanssakssak.common.ResVo;
 import com.clean.cleanssakssak.diary.model.*;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class DiaryController {
             result = -1 : 다이어리 제목 없음
             """)
     @PostMapping
-    public ResVo postDiary(@RequestBody DiaryInsDto dto){
+    public ResVo postDiary(@Valid @RequestBody DiaryInsDto dto){
         return service.postDiary(dto);
     }
 

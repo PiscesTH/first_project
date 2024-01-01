@@ -1,5 +1,6 @@
 package com.clean.cleanssakssak.todo.model;
 
+import com.clean.cleanssakssak.common.ValidationGroup;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -16,13 +17,19 @@ import java.time.LocalDate;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class TodoUpdDto {
     @Schema(description = "청소 내용")
-    @NotBlank
+    @NotBlank(message = "할 일을 입력해주세요.")
     private String cleaning;
-    @Schema(description = "청소 할 날짜")
-    @Pattern(regexp = "^(19|20)\\d\\d([- /.])(0[1-9]|1[012])\\2(0[1-9]|[12][0-9]|3[01])$")
+
+    @Schema(description = "청소 할 날짜", example = "2024-01-01")
+    @NotBlank(message = "날짜를 입력해주세요.", groups = ValidationGroup.NotBlankGroup.class)
+    @Pattern(regexp = "^(19|20)\\d\\d([-])(0[1-9]|1[012])\\2(0[1-9]|[12][0-9]|3[01])$",
+            message = " 2024-01-01 와 같은 형식으로 올바른 날짜를 입력해주세요.",
+            groups = ValidationGroup.PatternCheckGroup.class)
     private String doDay;
+
     @Schema(description = "todo pk")
     private int todoId;
+
     @Schema(description = "로그인 한 유저 pk")
     private int loginedUserId;
 }
