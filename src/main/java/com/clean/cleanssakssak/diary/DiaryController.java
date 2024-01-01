@@ -7,10 +7,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +32,17 @@ public class DiaryController {
             result = -1 : 다이어리 제목 없음
             """)
     @PostMapping
-    public ResVo postDiary(@Valid @RequestBody DiaryInsDto dto){
+    public ResVo postDiary(@Valid @RequestBody DiaryInsDto dto, @ApiIgnore BindingResult bindingResult) throws Exception {
+        if (dto.getPics().size() != 2){
+            bindingResult.reject("400","사진을 두 장 선택해주세요.");
+        }
+        if (bindingResult.hasErrors()) {
+            throw new MethodArgumentNotValidException(
+                    new MethodParameter(
+                            this.getClass()
+                                    .getDeclaredMethod("postDiary", DiaryInsDto.class, BindingResult.class), 0),
+                    bindingResult);
+        }
         return service.postDiary(dto);
     }
 

@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
         Map<String, String> map = new HashMap<>();
         map.put("error type", httpStatus.getReasonPhrase());
         map.put("code", "500");
-        map.put("message", "서버에 문제가 발생했습니다. 다시 시도해주세요.");
+        map.put("message", e.getMessage());
 
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }

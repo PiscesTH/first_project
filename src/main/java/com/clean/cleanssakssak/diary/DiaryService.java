@@ -6,6 +6,7 @@ import com.clean.cleanssakssak.diary.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,17 +20,7 @@ public class DiaryService {
     private final DiaryMapper mapper;
 
     //다이어리 &사진 등록
-    public ResVo postDiary(DiaryInsDto dto) {
-        if (dto.getTitle() == null || dto.getTitle().isBlank()) {
-            return new ResVo(Const.TITLE_NOT_EXIST);    //title 없으면 -1
-        }
-        int insDiaryResult = mapper.insDiary(dto);
-        if (insDiaryResult == 0){
-            return new ResVo(Const.FAIL);
-        }
-        if (dto.getPics() == null || dto.getPics().isEmpty()) {
-            return new ResVo(dto.getDiaryId());
-        }
+    public ResVo postDiary(DiaryInsDto dto)  {
         List<String> picsList = new ArrayList<>();
         for (String pic : dto.getPics()) {
             if (pic != null && !pic.isBlank()) {    //받은 사진 데이터가 null or 빈 문자열인지 체크
