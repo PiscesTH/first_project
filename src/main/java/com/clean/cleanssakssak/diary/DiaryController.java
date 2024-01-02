@@ -1,5 +1,6 @@
 package com.clean.cleanssakssak.diary;
 
+import com.clean.cleanssakssak.common.CustomInvalidExcetption;
 import com.clean.cleanssakssak.common.ResVo;
 import com.clean.cleanssakssak.diary.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,10 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +49,11 @@ public class DiaryController {
         }
         return service.postDiary(dto);*/
         if (dto.getPics().size() != 2){
-            throw new Exception("사진을 두 장 선택해주세요.");
+            bindingResult.reject("400", "");
+            bindingResult.rejectValue("dto.getPics()", "400");
+        }
+        if (bindingResult.hasErrors()){
+            throw new CustomInvalidExcetption(bindingResult);
         }
         return service.postDiary(dto);
     }
@@ -82,8 +89,19 @@ public class DiaryController {
         return service.updDiary(dto);
     }
 
-    @ExceptionHandler({ArrayIndexOutOfBoundsException.class, NullPointerException.class})
-    public ResponseEntity<String> handle(Exception exception){
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @ExceptionHandler({CustomInvalidExcetption.class})
+    public ResponseEntity<Map<String, String>> handle(CustomInvalidExcetption e){
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        Map<String, String> map = new HashMap<>();
+        BindingResult bindingResult = e.getBindingResult();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            map.put("error type", httpStatus.getReasonPhrase());
+            map.put("code", String.valueOf(httpStatus.value()));
+            map.put("message", fieldError.getDefaultMessage());
+            map.put("error position", fieldError.getField());
+            map.put("입력된 값", (String)fieldError.getRejectedValue());
+        }
+        return new ResponseEntity<>(map, httpStatus);
     }
 }
