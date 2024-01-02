@@ -4,6 +4,7 @@ import com.clean.cleanssakssak.common.ResVo;
 import com.clean.cleanssakssak.diary.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class DiaryController {
             """)
     @PostMapping
     public ResVo postDiary(@Valid @RequestBody DiaryInsDto dto, @ApiIgnore BindingResult bindingResult) throws Exception {
-        if (dto.getPics().size() != 2){
+        /*if (dto.getPics().size() != 2){
             bindingResult.reject("400","사진을 두 장 선택해주세요.");
         }
         if (bindingResult.hasErrors()) {
@@ -42,6 +43,10 @@ public class DiaryController {
                             this.getClass()
                                     .getDeclaredMethod("postDiary", DiaryInsDto.class, BindingResult.class), 0),
                     bindingResult);
+        }
+        return service.postDiary(dto);*/
+        if (dto.getPics().size() != 2){
+            throw new Exception("사진을 두 장 선택해주세요.");
         }
         return service.postDiary(dto);
     }
