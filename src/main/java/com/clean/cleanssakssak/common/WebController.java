@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class WebController implements ErrorController {
+public class WebController implements ErrorController { //시큐리티 사용시 이슈 발생
     @GetMapping({"/", "/error"})
     public String index() {
         return "index.html";
