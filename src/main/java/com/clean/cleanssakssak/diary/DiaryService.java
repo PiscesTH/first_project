@@ -21,9 +21,9 @@ public class DiaryService {
 
     //다이어리 &사진 등록
     public ResVo postDiary(DiaryInsDto dto)  {
-        List<String> picsList = new ArrayList<>();
-        for (String pic : dto.getPics()) {
-            if (pic != null && !pic.isBlank()) {    //받은 사진 데이터가 null or 빈 문자열인지 체크
+        List<DiaryPic> picsList = new ArrayList<>();
+        for (DiaryPic pic : dto.getPics()) {
+            if (pic != null && !pic.getPic().isBlank()) {    //받은 사진 데이터가 null or 빈 문자열인지 체크
                 picsList.add(pic);                  //저장할 사진 데이터 분류
             }
         }
@@ -76,10 +76,10 @@ public class DiaryService {
         delDto.setDiaryId(dto.getDiaryId());
         delDto.setLoginedUserId(dto.getLoginedUserId());
         int delPicsResult = mapper.delDiaryPics(delDto);
-        List<String> picsList = new ArrayList<>();
-        for (String pic : dto.getPics()) {
-            if (pic != null && !pic.isBlank()) {
-                picsList.add(pic);
+        List<DiaryPic> picsList = new ArrayList<>();
+        for (DiaryPic pic : dto.getPics()) {
+            if (pic != null && !pic.getPic().isBlank()) {    //받은 사진 데이터가 null or 빈 문자열인지 체크
+                picsList.add(pic);                  //저장할 사진 데이터 분류
             }
         }
         dto.setPics(picsList);

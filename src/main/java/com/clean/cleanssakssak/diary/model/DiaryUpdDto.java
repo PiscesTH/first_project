@@ -24,5 +24,5 @@ public class DiaryUpdDto {
     private String contents;
     @Schema(title = "다이어리 사진들")
     @NotBlank(message = "올바르지 않은 사진 데이터입니다.")
-    private List<@Valid String> pics;
+    private List<@Valid DiaryPic> pics;
 }
