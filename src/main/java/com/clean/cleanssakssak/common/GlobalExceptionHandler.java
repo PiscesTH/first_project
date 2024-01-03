@@ -40,6 +40,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = {CustomInvalidExcetption.class})
+    public ResponseEntity<Map<String, String>> customExceptionHandler(CustomInvalidExcetption e){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        BindingResult bindingResult = e.getBindingResult();
+        Map<String, String> map = new HashMap<>();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            map.put("error type", httpStatus.getReasonPhrase());
+            map.put("code", String.valueOf(httpStatus.value()));
+            map.put("message", fieldError.getDefaultMessage());
+            map.put("error position", fieldError.getField());
+            map.put("입력된 값", (String)fieldError.getRejectedValue());
+        }
+
+        return new ResponseEntity<>(map, responseHeaders, httpStatus);
+    }
+
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Map<String, String>> exceptionHandler(Exception e){
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -52,5 +69,4 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }
-
 }

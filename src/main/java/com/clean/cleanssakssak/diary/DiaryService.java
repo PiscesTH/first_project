@@ -21,6 +21,7 @@ public class DiaryService {
 
     //다이어리 &사진 등록
     public ResVo postDiary(DiaryInsDto dto)  {
+        int insResult = mapper.insDiary(dto);
         List<String> picsList = new ArrayList<>();
         for (String pic : dto.getPics()) {
             if (pic != null && !pic.isBlank()) {    //받은 사진 데이터가 null or 빈 문자열인지 체크
