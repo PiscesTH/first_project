@@ -1,6 +1,9 @@
 package com.clean.cleanssakssak.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,9 @@ import java.util.Map;
 import java.util.Set;
 
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
+    private final ObjectMapper om;
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> validExceptionHandler(MethodArgumentNotValidException e){
@@ -28,16 +33,22 @@ public class GlobalExceptionHandler {
             map.put("code", String.valueOf(httpStatus.value()));
             map.put("message", fieldError.getDefaultMessage());
             map.put("error position", fieldError.getField());
-            map.put("입력된 값", (String)fieldError.getRejectedValue());
         }
         return new ResponseEntity<>(map, httpStatus);
     }
 
-    @ExceptionHandler({ ConstraintViolationException.class })
-    public ResponseEntity<Object> handleValidList(final ConstraintViolationException ex) {
-        HashMap<String, Object> errMap = new HashMap<>();
-        errMap.put("msg", ex.getMessage());
-        return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResponseEntity handle(ConstraintViolationException constraintViolationException) {
+        Set<ConstraintViolation<?>> violations = constraintViolationException.getConstraintViolations();
+        String errorMessage = "";
+        if (!violations.isEmpty()) {
+            StringBuilder builder = new StringBuilder();
+            violations.forEach(violation -> builder.append(" " + violation.getMessage()));
+            errorMessage = builder.toString();
+        } else {
+            errorMessage = "ConstraintViolationException occured.";
+        }
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {CustomInvalidExcetption.class})
@@ -53,7 +64,6 @@ public class GlobalExceptionHandler {
             map.put("error position", fieldError.getField());
             map.put("입력된 값", (String)fieldError.getRejectedValue());
         }
-
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }
 

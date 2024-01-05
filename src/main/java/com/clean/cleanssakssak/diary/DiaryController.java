@@ -36,7 +36,7 @@ public class DiaryController {
             result = -1 : 다이어리 제목 없음
             """)
     @PostMapping
-    public ResVo postDiary(@Valid @RequestBody DiaryInsDto dto, @ApiIgnore BindingResult bindingResult) throws Exception {
+    public ResVo postDiary(@Valid @RequestBody DiaryInsDto dto) {
         /*if (dto.getPics().size() != 2){
             bindingResult.reject("400","사진을 두 장 선택해주세요.");
         }
@@ -48,13 +48,13 @@ public class DiaryController {
                     bindingResult);
         }
         return service.postDiary(dto);*/
-        if (dto.getPics().size() != 2){
+        /*if (dto.getPics().size() != 2){
             bindingResult.reject("400", "이거 나옴 ?");
             bindingResult.rejectValue("Pics", "400");
         }
         if (bindingResult.hasErrors()){
             throw new CustomInvalidExcetption(bindingResult);
-        }
+        }*/
         return service.postDiary(dto);
     }
 

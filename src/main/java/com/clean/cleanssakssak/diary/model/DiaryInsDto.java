@@ -1,5 +1,6 @@
 package com.clean.cleanssakssak.diary.model;
 
+import com.clean.cleanssakssak.common.ListSizeConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -33,6 +34,7 @@ public class DiaryInsDto {
 
     @Schema(title = "다이어리 사진들")
     @NotNull(message = "사진을 두 장 선택해주세요.")
+    @ListSizeConstraint
     private List<@NotBlank(message = "올바르지 않은 사진 형식입니다.") String> pics;
 
 }
