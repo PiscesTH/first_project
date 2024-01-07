@@ -1,5 +1,6 @@
 package com.clean.cleanssakssak.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,10 @@ import java.util.Set;
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
+    private final ObjectMapper objectMapper;
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> validExceptionHandler(MethodArgumentNotValidException e){
+    public ResponseEntity<Map<String, String>> validExceptionHandler(MethodArgumentNotValidException e) throws Exception{
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
         Map<String, String> map = new HashMap<>();
@@ -31,6 +33,8 @@ public class GlobalExceptionHandler {
             map.put("code", String.valueOf(httpStatus.value()));
             map.put("message", fieldError.getDefaultMessage());
             map.put("error position", fieldError.getField());
+            String rejectValue = objectMapper.writeValueAsString(fieldError.getRejectedValue());
+            map.put("error value", rejectValue);
         }
         return new ResponseEntity<>(map, httpStatus);
     }
@@ -41,7 +45,7 @@ public class GlobalExceptionHandler {
         String errorMessage = "";
         if (!violations.isEmpty()) {
             StringBuilder builder = new StringBuilder();
-            violations.forEach(violation -> builder.append(" " + violation.getMessage()));
+            violations.forEach(violation -> builder.append(" ").append(violation.getMessage()));
             errorMessage = builder.toString();
         } else {
             errorMessage = "ConstraintViolationException occured.";
@@ -60,7 +64,7 @@ public class GlobalExceptionHandler {
             map.put("code", String.valueOf(httpStatus.value()));
             map.put("message", fieldError.getDefaultMessage());
             map.put("error position", fieldError.getField());
-            map.put("입력된 값", (String)fieldError.getRejectedValue());
+//            map.put("입력된 값", (String)fieldError.getRejectedValue());
         }
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }
