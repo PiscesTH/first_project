@@ -34,8 +34,8 @@ public class GlobalExceptionHandler {
             map.put("message", fieldError.getDefaultMessage());
             map.put("error position", fieldError.getField());
             //map.put("입력된 값", (String)fieldError.getRejectedValue());
-            String rejectValue = objectMapper.writeValueAsString(fieldError.getRejectedValue());
-            map.put("error value", rejectValue);
+//            String rejectValue = objectMapper.writeValueAsString(fieldError.getRejectedValue());
+//            map.put("error value", rejectValue);
         }
         return new ResponseEntity<>(map, httpStatus);
     }
